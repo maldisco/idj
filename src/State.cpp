@@ -5,10 +5,7 @@ State::State() : quitRequested(false), bg("img/ocean.jpg"), music("audio/stageSt
     music.Play();
 }
 
-void State::LoadAssets()
-{
-    
-}
+void State::LoadAssets(){}
 
 void State::Update(float dt)
 {

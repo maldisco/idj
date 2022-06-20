@@ -4,7 +4,6 @@
 
 #include "SDL_image.h"
 
-// Definição dos métodos da classe Sprite
 Sprite::Sprite() : texture(nullptr)
 {
     

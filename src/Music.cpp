@@ -2,7 +2,6 @@
 
 #include "SDL.h"
 
-// Definição dos métodos da classe Music
 Music::Music() : music(nullptr)
 {
     

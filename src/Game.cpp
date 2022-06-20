@@ -3,7 +3,6 @@
 #include "Game.h"
 #include <iostream>
 
-// Definição dos métodos da classe Game
 Game* Game::instance;
 Game& Game::GetInstance()
 {
@@ -19,7 +18,7 @@ Game::Game(std::string title, int width, int height)
 {
     instance = this;
 
-    /* Initialization of basic SDL functionalities. */
+    // Initialization of basic SDL functionalities 
     if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_TIMER) != 0)
     {
         SDL_Log("Cant initialize SDL: %s", SDL_GetError());

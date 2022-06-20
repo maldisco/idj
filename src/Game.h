@@ -60,7 +60,7 @@ class Game {
         State& GetState();
 
         /**
-         * @brief Get the only instance of Game class (singleton)
+         * @brief Get the only instance of Game class
          * 
          * @return Game& 
          */
