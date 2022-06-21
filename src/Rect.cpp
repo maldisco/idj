@@ -9,22 +9,20 @@ Vec2 Rect::Center(){
     return Vec2(this->x + this->w/2, this->y + this->h/2);
 }
 
-float Rect::Distance(Rect r2){
-    Vec2 centerR1 = this->Center();
+Rect Rect::operator+(Vec2 v2){
+    return Rect(x + v2.x, y + v2.y, w, h);
+}
+
+Rect Rect::operator=(Rect rect){
+    return Rect(rect.x, rect.y, rect.w, rect.h);
+}
+
+float Rect::Distance(Rect r1, Rect r2){
+    Vec2 centerR1 = r1.Center();
     Vec2 centerR2 = r2.Center();
 
     float dx = abs(centerR1.x - centerR2.x);
     float dy = abs(centerR1.y - centerR2.y);
 
     return sqrt(dx*dx + dy*dy);
-}
-
-bool Rect::IsInside(Vec2 v2){
-    if(v2.x > this->x && v2.x < (this->x + this->w)){
-        if(v2.y > this->y && v2.y < (this->y + this->h)){
-            return true;
-        }
-    }
-
-    return false;
 }

@@ -1,5 +1,3 @@
-
-
 class Vec2{
     public:
         float x, y;
@@ -8,15 +6,19 @@ class Vec2{
 
         Vec2(float x, float y);
 
-        Vec2 Add(Vec2 v2);
+        Vec2 operator+(Vec2 v2);
 
-        Vec2 Sub(Vec2 v2);
+        Vec2 operator-(Vec2 v2);
+
+        Vec2 operator=(Vec2 v2);
 
         float Magnitude();
 
-        Vec2 Norm();
+        Vec2 Normalized();
 
-        float Distance(Vec2 v2);
+        static float Distance(Vec2 v1, Vec2 v2);
+
+        bool IsInside(Rect rect);
 
         float SlopeX();
 

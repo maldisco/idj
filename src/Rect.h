@@ -8,12 +8,11 @@ class Rect{
 
         Rect(float x, float y, float w, float h);
 
-        Rect AddVec(Vec2 v2);
+        Rect operator+(Vec2 v2);
+
+        Rect operator=(Rect rect);
 
         Vec2 Center();
 
-        float Distance(Rect r2);
-
-        bool IsInside(Vec2 v2);
-
+        static float Distance(Rect r1, Rect r2);
 };
