@@ -1,3 +1,6 @@
+#ifndef GAME_H
+#define GAME_H
+
 #include "SDL.h"
 
 #include "State.h"
@@ -66,3 +69,4 @@ class Game {
          */
         static Game& GetInstance();
 };
+#endif

@@ -1,3 +1,6 @@
+#ifndef MUSIC_H
+#define MUSIC_H
+
 #include <string>
 
 #include "SDL_mixer.h"
@@ -61,3 +64,4 @@ class Music{
          */
         bool IsOpen();
 };
+#endif

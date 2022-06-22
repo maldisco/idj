@@ -4,35 +4,27 @@
 
 #include "SDL_image.h"
 
-Sprite::Sprite() : texture(nullptr)
-{
-    
-}
+Sprite::Sprite(GameObject& associated) : texture(nullptr), Component(associated){}
 
-Sprite::Sprite(std::string file) : Sprite()
-{
+Sprite::Sprite(std::string file, GameObject& associated) : texture(nullptr), Component(associated){
     Open(file);
 }
 
-Sprite::~Sprite()
-{
+Sprite::~Sprite(){
     if (texture != nullptr)
     {
         SDL_DestroyTexture(texture);
     }
 }
 
-void Sprite::Open(std::string file)
-{
-    if (texture != nullptr)
-    {
+void Sprite::Open(std::string file){
+    if (texture != nullptr){
         SDL_DestroyTexture(texture);
     }
 
     texture = IMG_LoadTexture(Game::GetInstance().GetRenderer(), file.c_str());
 
-    if (texture == nullptr)
-    {
+    if (texture == nullptr){
         SDL_Log("Cant load bg: %s", SDL_GetError());
         exit(EXIT_FAILURE);
     }
@@ -41,36 +33,41 @@ void Sprite::Open(std::string file)
     SetClip(0, 0, width, height);
 }
 
-void Sprite::SetClip(int x, int y, int w, int h)
-{
+void Sprite::SetClip(int x, int y, int w, int h){
     clipRect.h = h;
     clipRect.w = w;
     clipRect.x = x;
     clipRect.y = y;
 }
 
-void Sprite::Render(int x, int y)
-{
+void Sprite::Update(float dt){}
+
+bool Sprite::Is(std::string type){
+    if(type == "Sprite"){
+        return true;
+    }
+
+    return false;
+}
+
+void Sprite::Render(){
     SDL_Rect dstrect;
-    dstrect.x = x;
-    dstrect.y = y;
+    dstrect.x = associated.box.x;
+    dstrect.y = associated.box.y;
     dstrect.w = clipRect.w;
     dstrect.h = clipRect.h;
 
     SDL_RenderCopy(Game::GetInstance().GetRenderer(), texture, &clipRect, &dstrect);
 }
 
-int Sprite::GetWidth()
-{
+int Sprite::GetWidth(){
     return width;
 }
 
-int Sprite::GetHeight()
-{
+int Sprite::GetHeight(){
     return height;
 }
 
-bool Sprite::IsOpen()
-{
+bool Sprite::IsOpen(){
     return texture != nullptr;
 }

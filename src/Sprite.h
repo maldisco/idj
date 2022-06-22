@@ -1,11 +1,17 @@
+#ifndef SPRITE_H
+#define SPRITE_H
+
 #include "SDL_image.h"
+
+#include "Component.h"
 
 #include <string>
 
 /**
- * @brief Only encapsulates an SDL_Texture.
+ * @brief inherits from component. encapsulates an SDL_Texture
+ * 
  */
-class Sprite{
+class Sprite : public Component{
     private:
         /**
          * @brief object that holds a texture 
@@ -20,16 +26,18 @@ class Sprite{
     
     public:
         /**
-         * @brief intializes texture as nullptr 
+         * @brief initialize texture as nullptr and call upper class constructor
+         * 
+         * @param associated 
          */
-        Sprite();
+        Sprite(GameObject& associated);
         
         /**
-         * @brief initializes texture as the image on the address passed as file
+         * @brief initialize texture as file and call upper class constructor
          * 
          * @param file 
          */
-        Sprite(std::string file);
+        Sprite(std::string file, GameObject& associated);
 
         /**
          * @brief destroy the Sprite (and SDL_Texture) object
@@ -38,7 +46,7 @@ class Sprite{
         ~Sprite();
 
         /**
-         * @brief opens an image on the 'file' address
+         * @brief open file and set it to texture
          * 
          * @param file 
          */
@@ -55,12 +63,12 @@ class Sprite{
         void SetClip(int x, int y, int w, int h);
 
         /**
-         * @brief call game renderer to render texture on positions x and y
-         * 
-         * @param x 
-         * @param y 
+         * @brief Render texture on game window 
          */
-        void Render(int x, int y);
+        void Render();
+
+        void Update(float dt);
+        bool Is(std::string type);
 
         /**
          * @brief Get the Width object
@@ -84,3 +92,4 @@ class Sprite{
          */
         bool IsOpen();
 };
+#endif

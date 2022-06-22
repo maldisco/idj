@@ -1,15 +1,15 @@
+#ifndef STATE_H
+#define STATE_H
+
 #include "Music.h"
 #include "Sprite.h"
+#include "memory"
 
 /**
  * @brief Class responsible for controlling the screen and specific internal logics.
  */
 class State{
     private:
-        /**
-         * @brief encapsulates an SDL_Texture (used as background)
-         */
-        Sprite bg;
         /**
          * @brief soundtrack of the game 
          */
@@ -18,12 +18,37 @@ class State{
          * @brief control signal for exiting the game 
          */
         bool quitRequested;
+        /**
+         * @brief GameObject array
+         * 
+         */
+        std::vector<std::unique_ptr<GameObject>> objectArray;
+
+        /**
+         * @brief take care of user inputs
+         * 
+         */
+        void Input();
+
+        /**
+         * @brief Add an object to object array
+         * 
+         * @param mouseX 
+         * @param mouseY 
+         */
+        void AddObject(int mouseX, int mouseY);
 
     public:
         /**
          * @brief construct a new State object, instantiating background and music
          */
         State();
+
+        /**
+         * @brief clear object array
+         * 
+         */
+        ~State();
 
         /**
          * @brief returns the quitrequested variable
@@ -50,3 +75,4 @@ class State{
          */
         void Render();
 };
+#endif

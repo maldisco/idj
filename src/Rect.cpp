@@ -26,3 +26,13 @@ float Rect::Distance(Rect r1, Rect r2){
 
     return sqrt(dx*dx + dy*dy);
 }
+
+bool Rect::Contains( Vec2 v2 ){
+    if(v2.x > x && v2.x < (x + w)){
+        if(v2.y > y && v2.y < (y + h)){
+            return true;
+        }
+    }
+
+    return false;
+}
