@@ -4,11 +4,11 @@
 
 #include "iostream"
 
-State::State() : quitRequested(false), music("audio/stageState.ogg"){
+State::State() : quitRequested(false), music("assets/audio/stageState.ogg"){
     
     GameObject* go = new GameObject();
     // add background sprite to go
-    go->AddComponent(new Sprite("img/ocean.jpg", *go));
+    go->AddComponent(new Sprite("assets/img/ocean.jpg", *go));
     go->box.x = 0;
     go->box.y = 0;
     objectArray.emplace_back(go);
@@ -98,12 +98,12 @@ void State::AddObject( int mouseX, int mouseY ){
     GameObject* go = new GameObject();
 
     // add sprite to go
-    go->AddComponent(new Sprite("img/penguinface.png", *go));
+    go->AddComponent(new Sprite("assets/img/penguinface.png", *go));
     go->box.x = mouseX;
     go->box.y = mouseY;
     
     // add sound to go
-    go->AddComponent(new Sound("audio/boom.wav", *go));
+    go->AddComponent(new Sound("assets/audio/boom.wav", *go));
 
     objectArray.emplace_back(go);
 }
