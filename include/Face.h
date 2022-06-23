@@ -3,7 +3,11 @@
 
 #include "Component.h"
 
-class Face : Component{
+/**
+ * @brief temporary class
+ * 
+ */
+class Face : public Component{
     public:
         Face(GameObject& associated);
 

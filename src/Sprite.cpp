@@ -43,7 +43,7 @@ void Sprite::SetClip(int x, int y, int w, int h){
 void Sprite::Update(float dt){}
 
 bool Sprite::Is(std::string type){
-    if(type == "Sprite"){
+    if(type.compare("Sprite") == 0){
         return true;
     }
 

@@ -1,6 +1,7 @@
 #include "GameObject.h"
 #include "algorithm"
 #include "Component.h"
+#include "iostream"
 
 GameObject::GameObject() : isDead(false){}
 
@@ -49,7 +50,7 @@ Component* GameObject::GetComponent(std::string type){
         // if type (string like 'Sound' or 'Face') equals argument
         if(components.at(i)->Is(type)){
             // return it
-            return components[i].get();
+            return components.at(i).get();
         }
     }
 

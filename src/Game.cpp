@@ -2,6 +2,7 @@
 #include "SDL_mixer.h"
 #include "Game.h"
 #include <iostream>
+#include <ctime>
 
 Game* Game::instance;
 Game& Game::GetInstance()
@@ -57,6 +58,8 @@ Game::Game(std::string title, int width, int height)
     }
 
     state = new State();
+
+    srand(time(NULL));
 }
 
 Game::~Game()

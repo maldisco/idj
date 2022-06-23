@@ -50,7 +50,6 @@ void State::Input() {
 				// chamar funções de GameObjects, use objectArray[i]->função() direto.
 
 				if(go->box.Contains( {(float)mouseX, (float)mouseY} ) ) {
-                    std::cout << "Entrou em contains";
 					Face* face = (Face*)go->GetComponent( "Face" );
 					if ( nullptr != face ) {
 						// Aplica dano
@@ -96,14 +95,16 @@ void State::Render(){
 
 void State::AddObject( int mouseX, int mouseY ){
     GameObject* go = new GameObject();
+	Sprite* temp = new Sprite("assets/img/penguinface.png", *go);
 
-    // add sprite to go
-    go->AddComponent(new Sprite("assets/img/penguinface.png", *go));
-    go->box.x = mouseX;
-    go->box.y = mouseY;
+    go->AddComponent(temp);
+    go->box.x = mouseX - temp->GetWidth()/2;
+    go->box.y = mouseY - temp->GetHeight()/2;
+	go->box.w = temp->GetWidth();
+	go->box.h = temp->GetHeight();
     
-    // add sound to go
     go->AddComponent(new Sound("assets/audio/boom.wav", *go));
+	go->AddComponent(new Face(*go));
 
     objectArray.emplace_back(go);
 }

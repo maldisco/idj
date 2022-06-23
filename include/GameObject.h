@@ -10,6 +10,10 @@
 // forward declaration to dodge circular dependency
 class Component;
 
+/**
+ * @brief represents an entity
+ * 
+ */
 class GameObject{
     public:
         Rect box;
@@ -24,6 +28,7 @@ class GameObject{
 
         bool IsDead();
 
+        // object died/destroyed
         void RequestDelete();
 
         void AddComponent(Component* cpt);
@@ -33,6 +38,7 @@ class GameObject{
         Component* GetComponent(std::string type);
 
     private:
+        // every component is a part of the entity e.g sprite, sound...
         std::vector<std::unique_ptr<Component>> components;
         bool isDead;
 };

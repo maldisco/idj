@@ -10,7 +10,7 @@ Sound::Sound(std::string file, GameObject& associated) : Component(associated){
 void Sound::Update(float dt){}
 
 bool Sound::Is(std::string type){
-    if(type == "Sound"){
+    if(type.compare("Sound") == 0){
         return true;
     }
 

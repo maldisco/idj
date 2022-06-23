@@ -4,7 +4,7 @@
 #define PI 3.14159265
 
 /**
- * @brief Class that represents both a point and a vector
+ * @brief represents both a point and a vector
  * 
  */
 class Vec2{
@@ -16,24 +16,25 @@ class Vec2{
 
         Vec2 operator+(Vec2 v2);
         Vec2 operator-(Vec2 v2);
+        Vec2 operator*(float n);
         Vec2 operator=(Vec2 v2);
 
         /**
-         * @brief Returns the magnitude or length of the vector
+         * @brief magnitude or length of the vector
          * 
          * @return float 
          */
         float Magnitude();
 
         /**
-         * @brief Returns a normalized vector (magnitude=1)
+         * @brief normalize the vector (magnitude=1)
          * 
          * @return Vec2 
          */
-        Vec2 Normalized();
+        Vec2 Normalize();
 
         /**
-         * @brief Returns the distance between two vectors
+         * @brief the distance between two vectors
          * 
          * @param v1 
          * @param v2 
@@ -42,18 +43,27 @@ class Vec2{
         static float Distance(Vec2 v1, Vec2 v2);
 
         /**
-         * @brief Returns inclination of the vector in relation to X
+         * @brief dot product of 2 vectors
+         * 
+         * @param v1 
+         * @param v2 
+         * @return float 
+         */
+        static float Dot(Vec2 v1, Vec2 v2);
+
+        /**
+         * @brief slope of a line from 2 points
+         * 
+         * @return float 
+         */
+        static float Slope(Vec2 v1, Vec2 v2);
+
+        /**
+         * @brief slope of the vector on x (in radians)
          * 
          * @return float 
          */
         float SlopeX();
-
-        /**
-         * @brief Returns inclination of the vector in relation to another vector
-         * 
-         * @return float 
-         */
-        float Slope(Vec2 v2);
 
         /**
          * @brief Rotate the vector

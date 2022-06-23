@@ -4,7 +4,7 @@
 #include "Vec2.h"
 
 /**
- * @brief Class that represents a rectangle 
+ * @brief represents a rectangle 
  */
 class Rect{
     public:
@@ -24,7 +24,7 @@ class Rect{
         Vec2 Center();
 
         /**
-         * @brief returns the distance between the center of two rectangles
+         * @brief distance between the center of two rectangles
          * 
          * @param r1 
          * @param r2 
@@ -33,7 +33,7 @@ class Rect{
         static float Distance(Rect r1, Rect r2);
 
         /**
-         * @brief returns if a given point is inside rect
+         * @brief if a given point is inside rect
          * 
          * @param x 
          * @param y 
