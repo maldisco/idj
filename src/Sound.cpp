@@ -1,9 +1,10 @@
 #include "Sound.h"
+#include "iostream"
 
 
-Sound::Sound(GameObject& associated) : Component(associated){}
+Sound::Sound(GameObject& associated) : Component(associated), chunk(nullptr){}
 
-Sound::Sound(std::string file, GameObject& associated) : Component(associated){
+Sound::Sound(std::string file, GameObject& associated) : Sound(associated){
     Open(file);
 }
 
@@ -20,7 +21,15 @@ bool Sound::Is(std::string type){
 void Sound::Render(){}
 
 void Sound::Play(int times){
+    if(chunk == nullptr){
+        SDL_Log("Cant load sound: %s", SDL_GetError());
+        exit(EXIT_FAILURE);
+    }
     channel = Mix_PlayChannel(-1, chunk, times-1);
+    if(channel == -1){
+        SDL_Log("Cant play sound: %s", SDL_GetError());
+        exit(EXIT_FAILURE);
+    }
 }
 
 void Sound::Stop(){
@@ -40,7 +49,6 @@ void Sound::Open(std::string file){
 Sound::~Sound(){
     if(chunk != nullptr){
         Mix_HaltChannel(channel);
+        Mix_FreeChunk(chunk);
     }
-
-    Mix_FreeChunk(chunk);
 }
