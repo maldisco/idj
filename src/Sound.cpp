@@ -1,9 +1,9 @@
 #include "Sound.h"
 
 
-Sound::Sound(GameObject& associated) : Component(associated){}
+Sound::Sound(GameObject& associated) : Component(associated), chunk(nullptr){}
 
-Sound::Sound(std::string file, GameObject& associated) : Component(associated){
+Sound::Sound(std::string file, GameObject& associated) : Sound(associated){
     Open(file);
 }
 
@@ -40,7 +40,6 @@ void Sound::Open(std::string file){
 Sound::~Sound(){
     if(chunk != nullptr){
         Mix_HaltChannel(channel);
+        Mix_FreeChunk(chunk);
     }
-
-    Mix_FreeChunk(chunk);
 }

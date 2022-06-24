@@ -50,14 +50,18 @@ bool Sprite::Is(std::string type){
     return false;
 }
 
-void Sprite::Render(){
+void Sprite::Render(int x, int y){
     SDL_Rect dstrect;
-    dstrect.x = associated.box.x;
-    dstrect.y = associated.box.y;
+    dstrect.x = x;
+    dstrect.y = y;
     dstrect.w = clipRect.w;
     dstrect.h = clipRect.h;
 
     SDL_RenderCopy(Game::GetInstance().GetRenderer(), texture, &clipRect, &dstrect);
+}
+
+void Sprite::Render(){
+    Render(associated.box.x, associated.box.y);
 }
 
 int Sprite::GetWidth(){

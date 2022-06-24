@@ -63,6 +63,14 @@ class Sprite : public Component{
         void SetClip(int x, int y, int w, int h);
 
         /**
+         * @brief Render texture on given coordinates
+         * 
+         * @param x 
+         * @param y 
+         */
+        void Render(int x, int y);
+
+        /**
          * @brief Render texture on game window 
          */
         void Render();
