@@ -1,6 +1,6 @@
 #include "TileSet.h"
 
-class TileMap{
+class TileMap : public Component{
     public:
         TileMap(GameObject& associated, std::string file, TileSet* tileSet);
 
