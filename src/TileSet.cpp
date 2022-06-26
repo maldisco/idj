@@ -1,4 +1,5 @@
 #include "TileSet.h"
+#include "iostream"
 
 TileSet::TileSet(GameObject& associated, int tileWidth, int tileHeight, std::string file) : tileHeight(tileHeight), tileWidth(tileWidth), tileSet(file, associated){
     this->columns = tileSet.GetWidth() / tileWidth;
@@ -10,7 +11,7 @@ void TileSet::RenderTile(unsigned index, float x, float y){
         // calculate clip address 
         // x = (index MOD columns) * tileWidth
         // y = (index / columns) * tileHeight
-        tileSet.SetClip( (index/this->columns)*tileWidth, (index%this->columns)*tileHeight, tileWidth, tileHeight );
+        tileSet.SetClip( (index%this->columns)*tileWidth, (index/this->columns)*tileHeight, tileWidth, tileHeight );
         tileSet.Render(x, y);
     }
 }

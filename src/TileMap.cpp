@@ -12,7 +12,7 @@ void TileMap::Load(std::string file){
     std::fstream map;
     std::vector<int> dims;
 
-    map.open("assets/map/tileMap.txt");
+    map.open(file);
     if(map.is_open()){
         std::string line;
         
@@ -29,9 +29,23 @@ void TileMap::Load(std::string file){
         mapHeight = dims[1];
         mapDepth = dims[2];
 
-        std::cout << "Largura: " << mapWidth << "\n";
-        std::cout << "Altura: " << mapHeight << "\n";
-        std::cout << "Profundidade: " << mapDepth << "\n";
+        while(getline(map, line)){
+            if(line != ""){
+                std::stringstream ss(line);
+
+                for(int i; ss >> i;){
+                    tileMatrix.push_back(i-1);
+                    
+                    if(ss.peek()==','){
+                        ss.ignore();
+                    }
+                
+                }
+            
+            }
+
+        }
+
     }
 }
 
@@ -40,16 +54,28 @@ void TileMap::SetTileSet(TileSet* tileSet){
 }
 
 int& TileMap::At(int x, int y, int z){
-    return tileMatrix[625*z + 25*y + x];
+    return tileMatrix[mapWidth*mapHeight*z + mapWidth*y + x];
 }
 
 void TileMap::RenderLayer(int layer, int cameraX, int cameraY){
+    for(int i = 0; i < mapWidth*mapHeight; i++){
 
+        int x = (i % mapWidth)*tileSet->GetTileWidth();
+        int y = (i / mapWidth)*tileSet->GetTileHeight();
+        int index = At(i%mapWidth, i/mapWidth, layer);
+
+        tileSet->RenderTile(index, x, y);
+    }
 }
 
 void TileMap::Render(){
-
+    RenderLayer(0, associated.box.x, associated.box.y);
+    RenderLayer(1, associated.box.x, associated.box.y);
 }
+
+void TileMap::Update(float dt){}
+
+bool TileMap::Is(std::string type){ return false; }
 
 int TileMap::GetDepth(){ return mapDepth; }
 int TileMap::GetWidth(){ return mapWidth; }

@@ -1,17 +1,26 @@
 #include "State.h"
 #include "Sound.h"
 #include "Face.h"
+#include "TileMap.h"
 
 #include "iostream"
 
 State::State() : quitRequested(false), music("assets/audio/stageState.ogg"){
     
+	// background
+	GameObject* bg = new GameObject();
+	bg->AddComponent(new Sprite("assets/img/ocean.jpg", *bg));
+	bg->box.x = 0;
+	bg->box.y = 0;
+	objectArray.emplace_back(bg);
+
+	// tileset
     GameObject* go = new GameObject();
-    // add background sprite to go
-    go->AddComponent(new Sprite("assets/img/ocean.jpg", *go));
-    go->box.x = 0;
-    go->box.y = 0;
-    objectArray.emplace_back(go);
+	TileSet* tileSet = new TileSet(*go, 64, 64, "assets/img/tileset.png");
+	go->AddComponent(new TileMap(*go, "assets/map/tileMap.txt", tileSet));
+	go->box.x = 0;
+	go->box.y = 0;
+	objectArray.emplace_back(go);
     
     music.Play();
 }

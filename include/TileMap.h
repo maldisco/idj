@@ -1,3 +1,6 @@
+#ifndef TILEMAP_H
+#define TILEMAP_H
+
 #include "TileSet.h"
 
 class TileMap : public Component{
@@ -19,6 +22,10 @@ class TileMap : public Component{
         int GetHeight();
 
         int GetDepth();
+
+        void Update(float dt);
+
+        bool Is(std::string type);
     
     private:
         std::vector<int> tileMatrix;
@@ -27,3 +34,4 @@ class TileMap : public Component{
         int mapHeight;
         int mapDepth;
 };
+#endif

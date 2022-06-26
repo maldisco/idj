@@ -1,3 +1,6 @@
+#ifndef TILESET_H
+#define TILESET_H
+
 #include "Sprite.h"
 
 class TileSet{
@@ -15,3 +18,4 @@ class TileSet{
         int rows, columns;
         int tileHeight, tileWidth;
 };
+#endif
