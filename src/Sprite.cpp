@@ -1,4 +1,5 @@
 #include "Game.h"
+#include "Resources.h"
 
 #include <iostream>
 
@@ -10,19 +11,10 @@ Sprite::Sprite(std::string file, GameObject& associated) : texture(nullptr), Com
     Open(file);
 }
 
-Sprite::~Sprite(){
-    if (texture != nullptr)
-    {
-        SDL_DestroyTexture(texture);
-    }
-}
+Sprite::~Sprite(){}
 
 void Sprite::Open(std::string file){
-    if (texture != nullptr){
-        SDL_DestroyTexture(texture);
-    }
-
-    texture = IMG_LoadTexture(Game::GetInstance().GetRenderer(), file.c_str());
+    texture = Resources::GetImage(file);
 
     if (texture == nullptr){
         SDL_Log("Cant load bg: %s", SDL_GetError());
