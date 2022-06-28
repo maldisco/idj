@@ -6,58 +6,53 @@
 #include "SDL_mixer.h"
 
 /**
- * @brief Responsible for soundtrack. Opens and plays a music.
+ * @brief Class responsible for soundtrack management.
  */
 class Music{
     private:
         /**
-         * @brief object that holds a music file 
+         * @brief Object that holds a music file 
          */
         Mix_Music* music;
     
     public:
         /**
-         * @brief only initializes music as nullptr
+         * @brief Initializes music as nullptr
          * 
          */
         Music();
 
         /**
-         * @brief initializes music as the archive passed
+         * @brief Initializes music as file
          * 
          * @param file 
          */
         Music(std::string file);
-
-        /**
-         * @brief stop and destroy music
-         * 
-         */
         ~Music();
 
         /**
-         * @brief play music 'times' times
+         * @brief Play music a number of times (-1 for infinite)
          * 
          * @param times 
          */
         void Play(int times = -1);
 
         /**
-         * @brief stop the music with a fade of 'msToStop' milisseconds
+         * @brief Stop the music with a fade out
          * 
          * @param msToStop 
          */
         void Stop(int msToStop = 1500);
 
         /**
-         * @brief open music file
+         * @brief Load file into music
          * 
          * @param file 
          */
         void Open(std::string file);
 
         /**
-         * @brief tells if a music is already loaded
+         * @brief Tell if music is already loaded
          * 
          * @return true 
          * @return false 

@@ -6,7 +6,7 @@
 #include "State.h"
 
 /**
- * @brief Class responsible for initializating/liberating resources and running main loop
+ * @brief Class responsible for running main game loop
  */
 class Game {
     private:

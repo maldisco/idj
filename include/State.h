@@ -11,11 +11,11 @@
 class State{
     private:
         /**
-         * @brief soundtrack of the game 
+         * @brief Soundtrack 
          */
         Music music;
         /**
-         * @brief control signal for exiting the game 
+         * @brief Control signal for exiting the game 
          */
         bool quitRequested;
         /**
@@ -25,7 +25,7 @@ class State{
         std::vector<std::unique_ptr<GameObject>> objectArray;
 
         /**
-         * @brief take care of user inputs
+         * @brief Take care of user inputs (temp)
          * 
          */
         void Input();
@@ -40,18 +40,18 @@ class State{
 
     public:
         /**
-         * @brief construct a new State object, instantiating background and music
+         * @brief Construct a new State object, instantiating background and music
          */
         State();
 
         /**
-         * @brief clear object array
+         * @brief Clear object array
          * 
          */
         ~State();
 
         /**
-         * @brief returns the quitrequested variable
+         * @brief Tell if game was closed
          * 
          * @return true 
          * @return false 
@@ -59,19 +59,14 @@ class State{
         bool QuitRequested();
 
         /**
-         * @brief Will be used for loading assets in the future 
-         */
-        void LoadAssets();
-
-        /**
-         * @brief Update game features, right now just check if quit was requested
+         * @brief Update game objects
          * 
          * @param dt 
          */
         void Update(float dt);
 
         /**
-         * @brief render background on game window 
+         * @brief Render game objects
          */
         void Render();
 };

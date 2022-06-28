@@ -29,8 +29,6 @@ State::~State(){
     objectArray.clear();
 }
 
-void State::LoadAssets(){}
-
 void State::Input() {
 	SDL_Event event;
 	int mouseX, mouseY;
@@ -85,10 +83,12 @@ void State::Input() {
 
 void State::Update(float dt){
     Input();
+	// Update every object
     for(int i=0; i<objectArray.size(); i++){
         objectArray[i]->Update(0);
     }
 
+	// Check if object is dead
     for(int i=0; i<objectArray.size(); i++){
         if( objectArray[i]->IsDead() ){
             objectArray.erase(objectArray.begin()+i);
@@ -97,6 +97,7 @@ void State::Update(float dt){
 }
 
 void State::Render(){
+	// Render every object
     for(int i=0; i<objectArray.size(); i++){
         objectArray[i]->Render();
     }
@@ -104,13 +105,13 @@ void State::Render(){
 
 void State::AddObject( int mouseX, int mouseY ){
     GameObject* go = new GameObject();
-	Sprite* temp = new Sprite("assets/img/penguinface.png", *go);
+	Sprite* sprite = new Sprite("assets/img/penguinface.png", *go);
 
-    go->AddComponent(temp);
-    go->box.x = mouseX - temp->GetWidth()/2;
-    go->box.y = mouseY - temp->GetHeight()/2;
-	go->box.w = temp->GetWidth();
-	go->box.h = temp->GetHeight();
+    go->AddComponent(sprite);
+    go->box.x = mouseX - sprite->GetWidth()/2;
+    go->box.y = mouseY - sprite->GetHeight()/2;
+	go->box.w = sprite->GetWidth();
+	go->box.h = sprite->GetHeight();
     
     go->AddComponent(new Sound("assets/audio/boom.wav", *go));
 	go->AddComponent(new Face(*go));

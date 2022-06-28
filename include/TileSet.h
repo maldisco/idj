@@ -3,14 +3,24 @@
 
 #include "Sprite.h"
 
+/**
+ * @brief Class that holds every map texture
+ * 
+ */
 class TileSet{
     public:
         TileSet(GameObject& associated, int tileWidth, int tileHeight, std::string file);
 
+        /**
+         * @brief Render a tile on a given position
+         * 
+         * @param index 
+         * @param x 
+         * @param y 
+         */
         void RenderTile(unsigned index, float x, float y);
 
         int GetTileWidth();
-
         int GetTileHeight();
     
     private:

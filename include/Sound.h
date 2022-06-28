@@ -6,7 +6,7 @@
 #include "SDL.h"
 
 /**
- * @brief sound effects of game objects
+ * @brief Component responsible for sound effects.
  * 
  */
 class Sound : public Component{

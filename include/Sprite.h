@@ -8,17 +8,17 @@
 #include <string>
 
 /**
- * @brief inherits from component. encapsulates an SDL_Texture
+ * @brief Component responsible for in-game texture (image).
  * 
  */
 class Sprite : public Component{
     private:
         /**
-         * @brief object that holds a texture 
+         * @brief Object that holds a texture 
          */
         SDL_Texture* texture;
         /**
-         * @brief rectangle specifying dimensions of the texture 
+         * @brief Rectangle specifying dimensions of the texture 
          */
         SDL_Rect clipRect;
         int width;
@@ -26,34 +26,29 @@ class Sprite : public Component{
     
     public:
         /**
-         * @brief initialize texture as nullptr and call upper class constructor
+         * @brief Initialize texture as nullptr
          * 
          * @param associated 
          */
         Sprite(GameObject& associated);
         
         /**
-         * @brief initialize texture as file and call upper class constructor
+         * @brief Initializes texture as file
          * 
          * @param file 
          */
         Sprite(std::string file, GameObject& associated);
-
-        /**
-         * @brief destroy the Sprite (and SDL_Texture) object
-         * 
-         */
         ~Sprite();
 
         /**
-         * @brief open file and set it to texture
+         * @brief Load file into texture
          * 
          * @param file 
          */
         void Open(std::string file);
 
         /**
-         * @brief Set the Clip object attrs
+         * @brief Set the Clip object attributes
          * 
          * @param x 
          * @param y 
@@ -63,7 +58,7 @@ class Sprite : public Component{
         void SetClip(int x, int y, int w, int h);
 
         /**
-         * @brief Render texture on given coordinates
+         * @brief Render texture on game window at given coordinates
          * 
          * @param x 
          * @param y 
@@ -93,7 +88,7 @@ class Sprite : public Component{
         int GetHeight();
         
         /**
-         * @brief tells if texture is already loaded
+         * @brief Tell if texture is already loaded
          * 
          * @return true 
          * @return false 
