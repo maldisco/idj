@@ -1,8 +1,10 @@
 #include "Resources.h"
-#include "SDL_mixer.h"
-#include "SDL_image.h"
 #include "Game.h"
 
+
+std::unordered_map<std::string, SDL_Texture*> Resources::imageTable;
+std::unordered_map<std::string, Mix_Music*> Resources::musicTable;
+std::unordered_map<std::string, Mix_Chunk*> Resources::soundTable;
 
 SDL_Texture* Resources::GetImage(std::string file){
     if(imageTable.find(file) != imageTable.end()){
@@ -14,7 +16,7 @@ SDL_Texture* Resources::GetImage(std::string file){
 }
 
 void Resources::ClearImages(){
-    for(std::pair<std::string, SDL_Texture*> image : imageTable){
+    for(auto& image : imageTable){
         SDL_DestroyTexture(image.second);
     }
 
@@ -31,9 +33,11 @@ Mix_Music* Resources::GetMusic(std::string file){
 }
 
 void Resources::ClearMusics(){
-    for(std::pair<std::string, Mix_Music*> music : musicTable){
+    for(auto& music : musicTable){
         Mix_FreeMusic(music.second);
     }
+
+    musicTable.clear();
 }
 
 Mix_Chunk* Resources::GetSound(std::string file){
@@ -46,7 +50,9 @@ Mix_Chunk* Resources::GetSound(std::string file){
 }
 
 void Resources::ClearSounds(){
-    for(std::pair<std::string, Mix_Chunk*> sound : soundTable){
+    for(auto& sound : soundTable){
         Mix_FreeChunk(sound.second);
     }
+
+    soundTable.clear();
 }
