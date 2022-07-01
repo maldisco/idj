@@ -1,10 +1,11 @@
 #include "TileMap.h"
+#include "Camera.h"
 #include "iostream"
 #include "fstream"
 #include "sstream"
 
 
-TileMap::TileMap(GameObject& associated, std::string file, TileSet* tileSet) : tileSet(tileSet), Component(associated){
+TileMap::TileMap(GameObject& associated, std::string file, TileSet* tileSet) : Component(associated), tileSet(tileSet){
     Load(file);
 }
 
@@ -69,8 +70,8 @@ void TileMap::RenderLayer(int layer, int cameraX, int cameraY){
 }
 
 void TileMap::Render(){
-    RenderLayer(0, associated.box.x, associated.box.y);
-    RenderLayer(1, associated.box.x, associated.box.y);
+    RenderLayer(0, Camera::pos.x, Camera::pos.y);
+    RenderLayer(1, Camera::pos.x, Camera::pos.y);
 }
 
 void TileMap::Update(float dt){}

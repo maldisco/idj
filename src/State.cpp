@@ -3,6 +3,7 @@
 #include "Face.h"
 #include "TileMap.h"
 #include "Game.h"
+#include "Camera.h"
 #include "InputManager.h"
 
 #include "iostream"
@@ -32,7 +33,10 @@ State::~State(){
 }
 
 void State::Update(float dt){
-    
+
+	// update camera
+	Camera::Update(dt);
+
 	// check if quit was requested
 	if(InputManager::GetInstance().KeyPress(ESCAPE_KEY) || InputManager::GetInstance().QuitRequested()){
 		quitRequested = true;
