@@ -18,7 +18,7 @@ Game& Game::GetInstance()
     return *instance;
 }
 
-Game::Game(std::string title, int width, int height)
+Game::Game(std::string title, int width, int height) : frameStart(0), dt(0)
 {
     instance = this;
 
@@ -90,6 +90,7 @@ void Game::Run()
 {
     while (!(state->QuitRequested()))
     {
+        CalculateDeltaTime();
         InputManager::GetInstance().Update();
         state->Update(0);
         state->Render();
@@ -102,4 +103,11 @@ void Game::Run()
     Resources::ClearSounds();
 }
 
+void Game::CalculateDeltaTime(){
+    int lastFrameStart = frameStart;
+    frameStart = SDL_GetTicks();
+    dt = (frameStart - lastFrameStart)/1000;
+}
+
+float Game::GetDeltaTime(){ return dt; }
 

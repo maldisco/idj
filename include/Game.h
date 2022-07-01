@@ -37,7 +37,19 @@ class Game {
          * @brief Object that controls the state of the game 
          */
         State* state;
-    
+
+        /**
+         * @brief time when frame started
+         */
+        int frameStart;
+
+        /**
+         * @brief delta time (time passed)
+         */
+        float dt;
+
+        void CalculateDeltaTime();
+
     public:
         /**
          * @brief Destroy the state object and quit all SDL functionalities 
@@ -69,5 +81,10 @@ class Game {
          * @return Game& 
          */
         static Game& GetInstance();
+
+        /**
+         * @brief return dt
+         */
+        float GetDeltaTime();
 };
 #endif

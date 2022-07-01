@@ -2,6 +2,7 @@
 #include "Sound.h"
 #include "Face.h"
 #include "TileMap.h"
+#include "Game.h"
 #include "InputManager.h"
 
 #include "iostream"
@@ -45,7 +46,7 @@ void State::Update(float dt){
 
 	// Update every object
     for(unsigned i=0; i<objectArray.size(); i++){
-        objectArray[i]->Update(0);
+        objectArray[i]->Update( Game::GetInstance().GetDeltaTime() );
     }
 
 	// Check if object is dead
