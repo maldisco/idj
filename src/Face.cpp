@@ -1,5 +1,6 @@
 #include "Face.h"
 #include "Sound.h"
+#include "InputManager.h"
 #include <iostream>
 
 Face::Face(GameObject& associated) : Component(associated), hitpoints(30){}
@@ -16,7 +17,13 @@ void Face::Damage(int damage){
 
 Face::~Face(){}
 
-void Face::Update(float dt){}
+void Face::Update(float dt){
+    if(InputManager::GetInstance().MousePress(LEFT_MOUSE_BUTTON)){
+        if(associated.box.Contains( {(float)InputManager::GetInstance().GetMouseX(), (float)InputManager::GetInstance().GetMouseY()} )){
+            Damage(std::rand() % 10 + 10);
+        }
+    }
+}
 
 void Face::Render(){}
 

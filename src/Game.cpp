@@ -2,6 +2,7 @@
 #define INCLUDE_SDL_MIXER
 #include "SDL_include.h"
 #include "Game.h"
+#include "InputManager.h"
 #include "Resources.h"
 #include <iostream>
 #include <ctime>
@@ -89,6 +90,7 @@ void Game::Run()
 {
     while (!(state->QuitRequested()))
     {
+        InputManager::GetInstance().Update();
         state->Update(0);
         state->Render();
         SDL_RenderPresent(renderer);
