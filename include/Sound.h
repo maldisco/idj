@@ -2,8 +2,9 @@
 #define SOUND_H
 
 #include "Component.h"
-#include "SDL_mixer.h"
-#include "SDL.h"
+#define INCLUDE_SDL_MIXER
+#define INCLUDE_SDL
+#include "SDL_include.h"
 
 /**
  * @brief Component responsible for sound effects.

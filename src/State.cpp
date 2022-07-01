@@ -5,7 +5,7 @@
 
 #include "iostream"
 
-State::State() : quitRequested(false), music("assets/audio/stageState.ogg"){
+State::State() : music("assets/audio/stageState.ogg"), quitRequested(false){
     
 	// background
 	GameObject* bg = new GameObject();
@@ -84,12 +84,12 @@ void State::Input() {
 void State::Update(float dt){
     Input();
 	// Update every object
-    for(int i=0; i<objectArray.size(); i++){
+    for(unsigned i=0; i<objectArray.size(); i++){
         objectArray[i]->Update(0);
     }
 
 	// Check if object is dead
-    for(int i=0; i<objectArray.size(); i++){
+    for(unsigned i=0; i<objectArray.size(); i++){
         if( objectArray[i]->IsDead() ){
             objectArray.erase(objectArray.begin()+i);
         }
@@ -98,7 +98,7 @@ void State::Update(float dt){
 
 void State::Render(){
 	// Render every object
-    for(int i=0; i<objectArray.size(); i++){
+    for(unsigned i=0; i<objectArray.size(); i++){
         objectArray[i]->Render();
     }
 }

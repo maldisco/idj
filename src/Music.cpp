@@ -1,7 +1,8 @@
 #include "Music.h"
 #include "Resources.h"
 
-#include "SDL.h"
+#define INCLUDE_SDL
+#include "SDL_include.h"
 
 Music::Music() : music(nullptr){}
 

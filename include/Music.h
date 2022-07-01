@@ -3,7 +3,8 @@
 
 #include <string>
 
-#include "SDL_mixer.h"
+#define INCLUDE_SDL_MIXER
+#include "SDL_include.h"
 
 /**
  * @brief Class responsible for soundtrack management.

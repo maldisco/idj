@@ -13,3 +13,5 @@ InputManager::InputManager(){
     mouseX;
     mouseY;
 }
+
+InputManager::~InputManager(){}
