@@ -1,14 +1,15 @@
 #include "Game.h"
 #include "Resources.h"
+#include "Camera.h"
 
 #include <iostream>
 
 #define INCLUDE_SDL_IMAGE
 #include "SDL_include.h"
 
-Sprite::Sprite(GameObject& associated) : texture(nullptr), Component(associated){}
+Sprite::Sprite(GameObject& associated) : Component(associated), texture(nullptr) {}
 
-Sprite::Sprite(std::string file, GameObject& associated) : texture(nullptr), Component(associated){
+Sprite::Sprite(std::string file, GameObject& associated) : Component(associated), texture(nullptr) {
     Open(file);
 }
 

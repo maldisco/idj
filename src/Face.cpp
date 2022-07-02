@@ -1,6 +1,7 @@
 #include "Face.h"
 #include "Sound.h"
 #include "InputManager.h"
+#include "Camera.h"
 #include <iostream>
 
 Face::Face(GameObject& associated) : Component(associated), hitpoints(30){}

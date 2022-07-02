@@ -60,6 +60,7 @@ Game::Game(std::string title, int width, int height) : frameStart(0), dt(0)
         exit(EXIT_FAILURE);
     }
 
+    frameStart = SDL_GetTicks();
     state = new State();
 
     srand(time(NULL));
@@ -92,7 +93,7 @@ void Game::Run()
     {
         CalculateDeltaTime();
         InputManager::GetInstance().Update();
-        state->Update(0);
+        state->Update(GetDeltaTime());
         state->Render();
         SDL_RenderPresent(renderer);
         SDL_Delay(33);
@@ -104,10 +105,9 @@ void Game::Run()
 }
 
 void Game::CalculateDeltaTime(){
-    int lastFrameStart = frameStart;
+    dt = (SDL_GetTicks() - frameStart);
     frameStart = SDL_GetTicks();
-    dt = (frameStart - lastFrameStart)/1000;
 }
 
-float Game::GetDeltaTime(){ return dt; }
+float Game::GetDeltaTime(){ return dt/1000; }
 
