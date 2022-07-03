@@ -5,6 +5,7 @@
 #include "Game.h"
 #include "Camera.h"
 #include "InputManager.h"
+#include "CameraFollower.h"
 
 #include "iostream"
 
@@ -13,6 +14,7 @@ State::State() : music("assets/audio/stageState.ogg"), quitRequested(false){
 	// background
 	GameObject* bg = new GameObject();
 	bg->AddComponent(new Sprite("assets/img/ocean.jpg", *bg));
+	bg->AddComponent(new CameraFollower(*bg));
 	bg->box.x = 0;
 	bg->box.y = 0;
 	objectArray.emplace_back(bg);
