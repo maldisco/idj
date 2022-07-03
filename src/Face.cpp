@@ -20,7 +20,8 @@ Face::~Face(){}
 
 void Face::Update(float dt){
     if(InputManager::GetInstance().MousePress(LEFT_MOUSE_BUTTON)){
-        if(associated.box.Contains( {(float)InputManager::GetInstance().GetMouseX(), (float)InputManager::GetInstance().GetMouseY()} )){
+        if(associated.box.Contains( {(float)(InputManager::GetInstance().GetMouseX()+Camera::pos.x), 
+            (float)(InputManager::GetInstance().GetMouseY()+Camera::pos.y)} )){
             Damage(std::rand() % 10 + 10);
         }
     }

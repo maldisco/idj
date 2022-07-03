@@ -73,8 +73,8 @@ void State::AddObject( int mouseX, int mouseY ){
 	Sprite* sprite = new Sprite("assets/img/penguinface.png", *go);
 
     go->AddComponent(sprite);
-    go->box.x = mouseX - sprite->GetWidth()/2;
-    go->box.y = mouseY - sprite->GetHeight()/2;
+    go->box.x = mouseX + Camera::pos.x - sprite->GetWidth()/2;
+    go->box.y = mouseY + Camera::pos.y - sprite->GetHeight()/2 ;
 	go->box.w = sprite->GetWidth();
 	go->box.h = sprite->GetHeight();
     

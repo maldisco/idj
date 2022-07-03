@@ -23,7 +23,6 @@ void Music::Stop(int msToStop){
 
 void Music::Open(std::string file){
     music = Resources::GetMusic(file);
-    Mix_VolumeMusic(MIX_MAX_VOLUME/8);
 
     if (music == nullptr){
         SDL_Log("Cant load music: %s", SDL_GetError());

@@ -30,7 +30,7 @@ class GameObject{
 
         // object died/destroyed
         void RequestDelete();
-
+        
         void AddComponent(Component* cpt);
 
         void RemoveComponent(Component* cpt);

@@ -19,7 +19,7 @@ void Sprite::Open(std::string file){
     texture = Resources::GetImage(file);
 
     if (texture == nullptr){
-        SDL_Log("Cant load bg: %s", SDL_GetError());
+        SDL_Log("Cant load sprite: %s", SDL_GetError());
         exit(EXIT_FAILURE);
     }
 
@@ -55,7 +55,7 @@ void Sprite::Render(int x, int y){
 }
 
 void Sprite::Render(){
-    Render(associated.box.x, associated.box.y);
+    Render(associated.box.x - Camera::pos.x, associated.box.y - Camera::pos.y);
 }
 
 int Sprite::GetWidth(){
