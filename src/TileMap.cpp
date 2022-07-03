@@ -64,8 +64,8 @@ void TileMap::RenderLayer(int layer, int cameraX, int cameraY){
         // i % mapWidth = Posição X  
         // i / mapHeight = Posição Y 
         // Multiplica-se o tileWidth e tileHeight pois as tiles não tem tamanho 1
-        int x = (i % mapWidth)*tileSet->GetTileWidth() - cameraX;
-        int y = (i / mapWidth)*tileSet->GetTileHeight() - cameraY;
+        int x = (i % mapWidth)*tileSet->GetTileWidth() - (cameraX * (layer+1));
+        int y = (i / mapWidth)*tileSet->GetTileHeight() - (cameraY * (layer+1));
         int index = At(i%mapWidth, i/mapWidth, layer);
 
         tileSet->RenderTile(index, x, y);
