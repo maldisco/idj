@@ -1,5 +1,7 @@
-#include "SDL_image.h"
-#include "SDL_mixer.h"
+#define INCLUDE_SDL_MIXER
+#define INCLUDE_SDL_image
+#include "SDL_include.h"
+
 #include "Game.h"
 #include <iostream>
 #include <ctime>

@@ -1,7 +1,8 @@
 #ifndef SPRITE_H
 #define SPRITE_H
 
-#include "SDL_image.h"
+#define INCLUDE_SDL_IMAGE
+#include "SDL_include.h"
 
 #include "Component.h"
 

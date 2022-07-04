@@ -2,7 +2,8 @@
 
 #include <iostream>
 
-#include "SDL_image.h"
+#define INCLUDE_SDL_IMAGE
+#include "SDL_include.h"
 
 Sprite::Sprite(GameObject& associated) : texture(nullptr), Component(associated){}
 

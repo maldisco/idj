@@ -2,3 +2,6 @@
 *.exe
 .vscode/
 lib/
+bin/
+dep/
+sdl/

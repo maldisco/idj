@@ -3,7 +3,8 @@
 
 #include <string>
 
-#include "SDL_mixer.h"
+#define INCLUDE_SDL_MIXER
+#include "SDL_include.h"
 
 /**
  * @brief Responsible for soundtrack. Opens and plays a music.
