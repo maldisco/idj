@@ -2,7 +2,6 @@
 
 #include <iostream>
 
-#include "SDL_image.h"
 
 Sprite::Sprite() : texture(nullptr)
 {

@@ -3,3 +3,6 @@
 .vscode/
 include/
 lib/
+bin/
+dep/
+sdl/
