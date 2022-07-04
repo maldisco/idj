@@ -1,7 +1,6 @@
 *.dll
 *.exe
 .vscode/
-include/
 lib/
 bin/
 dep/
