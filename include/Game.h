@@ -1,7 +1,8 @@
 #ifndef GAME_H
 #define GAME_H
 
-#include "SDL.h"
+#define INCLUDE_SDL
+#include "SDL_include.h"
 
 #include "State.h"
 
