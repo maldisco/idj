@@ -4,6 +4,10 @@
 #include "Vec2.h"
 #include "GameObject.h"
 
+/**
+ * @brief Control screen movement
+ * 
+ */
 class Camera{
     public:
         static void Follow(GameObject* NewFocus);

@@ -3,6 +3,10 @@
 
 #include "Component.h"
 
+/**
+ * @brief Flags a component. Follow the camera.
+ * 
+ */
 class CameraFollower : public Component {
     public:
         CameraFollower(GameObject& go);
