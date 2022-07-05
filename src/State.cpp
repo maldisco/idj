@@ -9,7 +9,7 @@
 
 #include "iostream"
 
-State::State() : music("assets/audio/stageState.ogg"), quitRequested(false){
+State::State() : music("assets/audio/stageState.ogg"), quitRequested(false), started(false){
     
 	// background
 	GameObject* bg = new GameObject();
@@ -32,6 +32,20 @@ State::State() : music("assets/audio/stageState.ogg"), quitRequested(false){
 
 State::~State(){
     objectArray.clear();
+}
+
+void State::Start(){
+	LoadAssets();
+
+	for(auto go : objectArray){
+		go->Start();
+	}
+
+	started = true;
+}
+
+void State::LoadAssets(){
+
 }
 
 void State::Update(float dt){
@@ -84,6 +98,27 @@ void State::AddObject( int mouseX, int mouseY ){
 	go->AddComponent(new Face(*go));
 
     objectArray.emplace_back(go);
+}
+
+std::weak_ptr<GameObject> State::AddObject( GameObject* go ){
+	std::shared_ptr<GameObject> sharedGo(go);
+	objectArray.push_back( sharedGo );
+
+	if(started){
+		go->Start();
+	}
+
+	return std::weak_ptr<GameObject>(sharedGo);
+}
+
+std::weak_ptr<GameObject> State::GetObjectPtr( GameObject* go ){
+	for(auto s : objectArray){
+		if(s.get() == go){
+			return std::weak_ptr<GameObject>(s);
+		}
+	}
+
+	return {};
 }
 
 bool State::QuitRequested()

@@ -3,10 +3,18 @@
 #include "Component.h"
 #include "iostream"
 
-GameObject::GameObject() : isDead(false){}
+GameObject::GameObject() : isDead(false), started(false){}
 
 GameObject::~GameObject(){
     components.clear();
+}
+
+void GameObject::Start(){
+    for(int i=0; i<components.size(); i++){
+        components.at(i)->Start();
+    }
+
+    started = true;
 }
 
 void GameObject::Update(float dt){
@@ -31,6 +39,10 @@ void GameObject::RequestDelete(){
 
 void GameObject::AddComponent(Component* cpt){
     components.emplace_back(cpt);
+
+    if(started){
+        cpt->Start();
+    }
 }
 
 void GameObject::RemoveComponent(Component* cpt){

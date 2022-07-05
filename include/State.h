@@ -22,7 +22,9 @@ class State{
          * @brief GameObject array
          * 
          */
-        std::vector<std::unique_ptr<GameObject>> objectArray;
+        std::vector<std::shared_ptr<GameObject>> objectArray;
+
+        bool started;
 
         /**
          * @brief Take care of user inputs (temp)
@@ -69,5 +71,13 @@ class State{
          * @brief Render game objects
          */
         void Render();
+
+        void LoadAssets();
+
+        void Start();
+
+        std::weak_ptr< GameObject > AddObject(GameObject* go);
+
+        std::weak_ptr< GameObject > GetObjectPtr(GameObject* go);
 };
 #endif

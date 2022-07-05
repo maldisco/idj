@@ -17,10 +17,13 @@ class Component;
 class GameObject{
     public:
         Rect box;
+        bool started;
 
         GameObject();
 
         ~GameObject();
+
+        void Start();
 
         void Update(float dt);
 

@@ -34,6 +34,12 @@ class Component{
          * @return false 
          */
         virtual bool Is(std::string type) = 0;
+
+        /**
+         * @brief preparatory actions
+         * 
+         */
+        virtual void Start();
     
     protected:
         GameObject& associated;
