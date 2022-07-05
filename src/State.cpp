@@ -6,6 +6,7 @@
 #include "Camera.h"
 #include "InputManager.h"
 #include "CameraFollower.h"
+#include "Alien.h"
 
 #include "iostream"
 
@@ -26,6 +27,15 @@ State::State() : music("assets/audio/stageState.ogg"), quitRequested(false), sta
 	go->box.x = 0;
 	go->box.y = 0;
 	objectArray.emplace_back(go);
+
+	// enemy
+	GameObject* enemy = new GameObject();
+	Alien* alien = new Alien(*enemy, 0);
+	enemy->AddComponent(alien);
+	enemy->box.x = 512;
+	enemy->box.y = 300;
+	objectArray.emplace_back(enemy);
+
     
     music.Play();
 }
