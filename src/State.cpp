@@ -1,6 +1,5 @@
 #include "State.h"
 #include "Sound.h"
-#include "Face.h"
 #include "TileMap.h"
 #include "Game.h"
 #include "Camera.h"
@@ -18,7 +17,7 @@ State::State() : music("assets/audio/stageState.ogg"), quitRequested(false), sta
 	bg->AddComponent(new CameraFollower(*bg));
 	bg->box.x = 0;
 	bg->box.y = 0;
-	objectArray.emplace_back(bg);
+	AddObject(bg);
 
 	// tileset
     GameObject* go = new GameObject();
@@ -26,16 +25,14 @@ State::State() : music("assets/audio/stageState.ogg"), quitRequested(false), sta
 	go->AddComponent(new TileMap(*go, "assets/map/tileMap.txt", tileSet));
 	go->box.x = 0;
 	go->box.y = 0;
-	objectArray.emplace_back(go);
+	AddObject(go);
 
 	// enemy
 	GameObject* enemy = new GameObject();
-	Alien* alien = new Alien(*enemy, 0);
-	enemy->AddComponent(alien);
+	enemy->AddComponent(new Alien(*enemy, 0));
 	enemy->box.x = 512;
 	enemy->box.y = 300;
-	objectArray.emplace_back(enemy);
-
+	AddObject(enemy);
     
     music.Play();
 }
@@ -68,15 +65,9 @@ void State::Update(float dt){
 		quitRequested = true;
 	}
 
-	// if space key was pressed, create an enemy
-	if(InputManager::GetInstance().KeyPress(SDLK_SPACE)){
-		Vec2 objPos = Vec2( 200, 0 ).Rotate( -PI + PI*(rand() % 1001)/500.0 ) + Vec2( InputManager::GetInstance().GetMouseX(), InputManager::GetInstance().GetMouseY() );
-		AddObject((int)objPos.x, (int)objPos.y);
-	}
-
 	// Update every object
     for(unsigned i=0; i<objectArray.size(); i++){
-        objectArray[i]->Update( Game::GetInstance().GetDeltaTime() );
+        objectArray[i]->Update(dt);
     }
 
 	// Check if object is dead
@@ -92,22 +83,6 @@ void State::Render(){
     for(unsigned i=0; i<objectArray.size(); i++){
         objectArray[i]->Render();
     }
-}
-
-void State::AddObject( int mouseX, int mouseY ){
-    GameObject* go = new GameObject();
-	Sprite* sprite = new Sprite("assets/img/penguinface.png", *go);
-
-    go->AddComponent(sprite);
-    go->box.x = mouseX + Camera::pos.x - sprite->GetWidth()/2;
-    go->box.y = mouseY + Camera::pos.y - sprite->GetHeight()/2 ;
-	go->box.w = sprite->GetWidth();
-	go->box.h = sprite->GetHeight();
-    
-    go->AddComponent(new Sound("assets/audio/boom.wav", *go));
-	go->AddComponent(new Face(*go));
-
-    objectArray.emplace_back(go);
 }
 
 std::weak_ptr<GameObject> State::AddObject( GameObject* go ){

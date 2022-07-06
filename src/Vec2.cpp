@@ -39,8 +39,7 @@ float Vec2::Dot(Vec2 v1, Vec2 v2){
 }
 
 float Vec2::SlopeX(){
-    float m = Dot(this->Normalize(), Vec2(1, 0));
-    return atan(m);
+    return atan2(this->x, this->y);
 }
 
 float Vec2::Slope(Vec2 v1, Vec2 v2){

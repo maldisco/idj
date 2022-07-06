@@ -32,14 +32,6 @@ class State{
          */
         void Input();
 
-        /**
-         * @brief Add an object to object array
-         * 
-         * @param mouseX 
-         * @param mouseY 
-         */
-        void AddObject(int mouseX, int mouseY);
-
     public:
         /**
          * @brief Construct a new State object, instantiating background and music
