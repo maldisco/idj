@@ -43,7 +43,7 @@ float Vec2::SlopeX(){
 }
 
 float Vec2::Slope(Vec2 v1, Vec2 v2){
-    return (v1 - v2).SlopeX();
+    return atan2(v1.y, v1.x) - atan2(v2.y, v2.x);
 }
 
 Vec2 Vec2::Rotate(float angle){

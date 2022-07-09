@@ -38,12 +38,8 @@ void Alien::Update(float dt){
         if(taskQueue.front().type == Action::ActionType::MOVE){
             // turn speed vector in mouse click direction
             Vec2 dir = taskQueue.front().pos -  associated.box.Center();
-            float angle = SDL_atan2(dir.y, dir.x) - SDL_atan2(speed.y, speed.x);
-            Vec2 newSpeed = speed.Rotate(angle);
-            
+            Vec2 newSpeed = speed.Rotate(Vec2::Slope(dir, speed));
 
-            //speed = speed.Rotate(Vec2::Slope(speed, taskQueue.front().pos - associated.box.Center()));
-            std::cout << "speed : (" << speed.x << ", " << speed.y << ") " << std::endl;
             // if distance to click position is less than speed
             if(Vec2::Distance(associated.box.Center(), taskQueue.front().pos) < (speed*dt).Magnitude()){
                 // go to click position
@@ -55,7 +51,6 @@ void Alien::Update(float dt){
                 associated.box.x += newSpeed.x*dt;
                 associated.box.y += newSpeed.y*dt;
             }
-            std::cout << "Alien se move para (" << associated.box.x << ", " << associated.box.y << ")" << std::endl;
         } else {
             taskQueue.pop();
         }
