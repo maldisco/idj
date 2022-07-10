@@ -1,6 +1,7 @@
 #ifndef VEC2_H
 #define VEC2_H
 
+#include <string>
 #define PI 3.14159265
 
 /**

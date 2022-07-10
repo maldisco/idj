@@ -7,8 +7,6 @@
 #include "CameraFollower.h"
 #include "Alien.h"
 
-#include "iostream"
-
 State::State() : music("assets/audio/stageState.ogg"), quitRequested(false), started(false){
     
 	// background

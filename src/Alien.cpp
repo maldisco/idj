@@ -1,7 +1,9 @@
 #include "Alien.h"
+#include "Minion.h"
 #include "Sprite.h"
 #include "InputManager.h"
 #include "Camera.h"
+#include "Game.h"
 #include <iostream>
 
 
@@ -14,7 +16,9 @@ Alien::~Alien(){
 }
 
 void Alien::Start(){
-
+    GameObject* minion = new GameObject();
+    minion->AddComponent(new Minion(*minion, Game::GetInstance().GetState().GetObjectPtr(&associated)));
+    minionArray.push_back(Game::GetInstance().GetState().AddObject(minion));
 }
 
 void Alien::Update(float dt){
@@ -43,8 +47,8 @@ void Alien::Update(float dt){
             // if distance to click position is less than speed
             if(Vec2::Distance(associated.box.Center(), taskQueue.front().pos) < (speed*dt).Magnitude()){
                 // go to click position
-                associated.box.x = taskQueue.front().pos.x;
-                associated.box.y = taskQueue.front().pos.y;
+                associated.box.x = taskQueue.front().pos.x - associated.box.w/2;
+                associated.box.y = taskQueue.front().pos.y - associated.box.h/2;
                 taskQueue.pop();
             } else {
                 // move in direction to the click
