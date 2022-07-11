@@ -18,7 +18,6 @@ class Vec2{
         Vec2 operator+(Vec2 v2);
         Vec2 operator-(Vec2 v2);
         Vec2 operator*(float n);
-        Vec2 operator=(Vec2 v2);
 
         /**
          * @brief magnitude or length of the vector

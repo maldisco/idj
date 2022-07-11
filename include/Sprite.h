@@ -22,6 +22,7 @@ class Sprite : public Component{
          * @brief Rectangle specifying dimensions of the texture 
          */
         SDL_Rect clipRect;
+        Vec2 scale;
         int width;
         int height;
     
@@ -73,6 +74,15 @@ class Sprite : public Component{
 
         void Update(float dt);
         bool Is(std::string type);
+
+        /**
+         * @brief Set sprite scale (size)
+         * 
+         * @param scaleX 
+         * @param scaleY 
+         */
+        void SetScaleX(float scaleX, float scaleY);
+        Vec2 GetScale();
 
         /**
          * @brief Get the Width object

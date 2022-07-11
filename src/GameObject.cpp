@@ -3,14 +3,14 @@
 #include "Component.h"
 #include "iostream"
 
-GameObject::GameObject() : isDead(false), started(false){}
+GameObject::GameObject() : started(false), angleDeg(0), isDead(false) {}
 
 GameObject::~GameObject(){
     components.clear();
 }
 
 void GameObject::Start(){
-    for(int i=0; i<components.size(); i++){
+    for(unsigned i=0; i<components.size(); i++){
         components.at(i)->Start();
     }
 
@@ -18,13 +18,13 @@ void GameObject::Start(){
 }
 
 void GameObject::Update(float dt){
-    for(int i=0; i<components.size(); i++){
+    for(unsigned i=0; i<components.size(); i++){
         components.at(i)->Update(dt);
     }
 }
 
 void GameObject::Render(){
-    for(int i=0; i<components.size(); i++){
+    for(unsigned i=0; i<components.size(); i++){
         components.at(i)->Render();
     }
 }
@@ -47,7 +47,7 @@ void GameObject::AddComponent(Component* cpt){
 
 void GameObject::RemoveComponent(Component* cpt){
     // iterate through components
-    for(int i=0; i<components.size(); i++){
+    for(unsigned i=0; i<components.size(); i++){
         // find the one thats equal to argument
         if(components[i].get() == cpt){
             // erase it
@@ -58,7 +58,7 @@ void GameObject::RemoveComponent(Component* cpt){
 
 Component* GameObject::GetComponent(std::string type){
     // iterate through components
-    for(int i=0; i<components.size(); i++){
+    for(unsigned i=0; i<components.size(); i++){
         // if type (string like 'Sound' or 'Face') equals argument
         if(components.at(i)->Is(type)){
             // return it

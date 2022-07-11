@@ -1,8 +1,13 @@
 #include "Minion.h"
-#include "iostream"
+#include "Bullet.h"
+#include "Game.h"
+#include <cmath>
 
 Minion::Minion(GameObject& associated, std::weak_ptr<GameObject> alienCenter, float arcOffsetDeg) : Component(associated), alienCenter(alienCenter), arc(arcOffsetDeg){
-    associated.AddComponent(new Sprite("assets/img/minion.png", associated));
+    float scale = 1 + (float)(rand()%50)/100;
+    Sprite* minionSprite = new Sprite("assets/img/minion.png", associated);
+    minionSprite->SetScaleX(sqrt(scale), sqrt(scale));
+    associated.AddComponent(minionSprite);
 
     Vec2 origin = Vec2(100, 0).Rotate(arc) + alienCenter.lock().get()->box.Center();
     associated.box.x = origin.x - associated.box.w/2;
@@ -15,10 +20,24 @@ void Minion::Update(float dt){
     }
     // increase arc
     arc += ARC;
+    associated.angleDeg = arc*180/PI;
 
     Vec2 origin = Vec2(100, 0).Rotate(arc) + alienCenter.lock().get()->box.Center();
     associated.box.x = origin.x - associated.box.w/2;
     associated.box.y = origin.y - associated.box.h/2;
+}
+
+void Minion::Shoot(Vec2 target){
+    Vec2 dir = target - associated.box.Center();
+    float angle = dir.SlopeX();
+
+    GameObject* bulletObject = new GameObject();
+    // Bullet(associated, angle, speed, damage, maxDistance, sprite)
+    bulletObject->AddComponent(new Bullet(*bulletObject, angle, 500, 10, 1000, "assets/img/minionbullet1.png"));
+    bulletObject->box.x = associated.box.x;
+    bulletObject->box.y = associated.box.y;
+    bulletObject->angleDeg = angle*180/PI;
+    Game::GetInstance().GetState().AddObject(bulletObject);
 }
 
 void Minion::Render(){}

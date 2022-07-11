@@ -9,7 +9,7 @@
 
 Sprite::Sprite(GameObject& associated) : Component(associated), texture(nullptr) {}
 
-Sprite::Sprite(std::string file, GameObject& associated) : Component(associated), texture(nullptr) {
+Sprite::Sprite(std::string file, GameObject& associated) : Component(associated), texture(nullptr), scale({1, 1}) {
     Open(file);
 }
 
@@ -50,22 +50,43 @@ void Sprite::Render(int x, int y){
     SDL_Rect dstrect;
     dstrect.x = x;
     dstrect.y = y;
-    dstrect.w = clipRect.w;
-    dstrect.h = clipRect.h;
+    dstrect.w = clipRect.w*this->GetScale().x;
+    dstrect.h = clipRect.h*this->GetScale().y;
 
-    SDL_RenderCopy(Game::GetInstance().GetRenderer(), texture, &clipRect, &dstrect);
+    SDL_RenderCopyEx(Game::GetInstance().GetRenderer(), texture, &clipRect, &dstrect, associated.angleDeg, nullptr, SDL_FLIP_NONE);
 }
 
 void Sprite::Render(){
     Render(associated.box.x - Camera::pos.x, associated.box.y - Camera::pos.y);
 }
 
+void Sprite::SetScaleX(float scaleX, float scaleY){
+    // % of increase/decrease in size rate
+    float widthChangeRate = scaleX - scale.x;
+    float heightChangeRate = scaleY - scale.y;
+
+    // absolute value of increase/decrease 
+    float widthChange = associated.box.w*widthChangeRate;
+    float heightChange = associated.box.h*heightChangeRate;
+
+    // rescale associated box
+    associated.box.w += widthChange;
+    associated.box.h += heightChange;
+    associated.box.x -= widthChange/2;
+    associated.box.y -= heightChange/2;
+
+    scale.x = scaleX;
+    scale.y = scaleY;
+}
+
+Vec2 Sprite::GetScale(){ return scale; }
+
 int Sprite::GetWidth(){
-    return width;
+    return width*scale.x;
 }
 
 int Sprite::GetHeight(){
-    return height;
+    return height*scale.y;
 }
 
 bool Sprite::IsOpen(){
