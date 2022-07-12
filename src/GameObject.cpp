@@ -1,7 +1,6 @@
 #include "GameObject.h"
 #include "algorithm"
 #include "Component.h"
-#include "iostream"
 
 GameObject::GameObject() : started(false), angleDeg(0), isDead(false) {}
 

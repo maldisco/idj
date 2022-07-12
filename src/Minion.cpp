@@ -5,7 +5,7 @@
 
 Minion::Minion(GameObject& associated, std::weak_ptr<GameObject> alienCenter, float arcOffsetDeg) : Component(associated), alienCenter(alienCenter), arc(arcOffsetDeg){
     float scale = 1 + (float)(rand()%50)/100;
-    Sprite* minionSprite = new Sprite("assets/img/minion.png", associated);
+    Sprite* minionSprite = new Sprite("assets/img/minion.png", associated, 1, 1.0);
     minionSprite->SetScaleX(sqrt(scale), sqrt(scale));
     associated.AddComponent(minionSprite);
 
@@ -33,7 +33,7 @@ void Minion::Shoot(Vec2 target){
 
     GameObject* bulletObject = new GameObject();
     // Bullet(associated, angle, speed, damage, maxDistance, sprite)
-    bulletObject->AddComponent(new Bullet(*bulletObject, angle, 500, 10, 1000, "assets/img/minionbullet1.png"));
+    bulletObject->AddComponent(new Bullet(*bulletObject, angle, 500, 10, 500, "assets/img/minionbullet2.png", 0.05, 3));
     bulletObject->box.x = associated.box.x;
     bulletObject->box.y = associated.box.y;
     bulletObject->angleDeg = angle*180/PI;

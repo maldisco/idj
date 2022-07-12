@@ -11,7 +11,7 @@ State::State() : music("assets/audio/stageState.ogg"), quitRequested(false), sta
     
 	// background
 	GameObject* bg = new GameObject();
-	bg->AddComponent(new Sprite("assets/img/ocean.jpg", *bg));
+	bg->AddComponent(new Sprite("assets/img/ocean.jpg", *bg, 1, 1.0));
 	bg->AddComponent(new CameraFollower(*bg));
 	bg->box.x = 0;
 	bg->box.y = 0;

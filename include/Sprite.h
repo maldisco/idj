@@ -25,6 +25,10 @@ class Sprite : public Component{
         Vec2 scale;
         int width;
         int height;
+        int frameCount;
+        int currentFrame;
+        float timeElapsed;
+        float frameTime;
     
     public:
         /**
@@ -32,14 +36,17 @@ class Sprite : public Component{
          * 
          * @param associated 
          */
-        Sprite(GameObject& associated);
+        Sprite(GameObject& associated, int frameCount, float frameTime);
         
         /**
          * @brief Initializes texture as file
          * 
          * @param file 
+         * @param associated 
+         * @param frameCount 
+         * @param frameTime 
          */
-        Sprite(std::string file, GameObject& associated);
+        Sprite(std::string file, GameObject& associated, int frameCount, float frameTime);
         ~Sprite();
 
         /**
@@ -58,6 +65,27 @@ class Sprite : public Component{
          * @param h 
          */
         void SetClip(int x, int y, int w, int h);
+
+        /**
+         * @brief Set the Frame object
+         * 
+         * @param frame 
+         */
+        void SetFrame(int frame);
+
+        /**
+         * @brief Set the Frame Count object
+         * 
+         * @param frameCount 
+         */
+        void SetFrameCount(int frameCount);
+
+        /**
+         * @brief Set the Frame Time object
+         * 
+         * @param frameTime 
+         */
+        void SetFrameTime(float frameTime);
 
         /**
          * @brief Render texture on game window at given coordinates
