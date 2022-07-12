@@ -4,6 +4,11 @@
 #include "Component.h"
 #include <queue>
 
+
+/**
+ * @brief Entity that responds to mouse inputs
+ * 
+ */
 class Alien : public Component{
     public:
         Alien(GameObject& associated, int nMinions);
@@ -18,6 +23,9 @@ class Alien : public Component{
         bool Is(std::string type);
     
     private:
+        /**
+         * @brief Represent an action (move/shoot and direction)
+         */
         class Action{
             public:
                 enum ActionType{ MOVE, SHOOT };

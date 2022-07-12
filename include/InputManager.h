@@ -15,6 +15,9 @@
 
 #include "unordered_map"
 
+/**
+ * @brief Encapsulates mouse and keyboard inputs
+ */
 class InputManager{
     public:
         void Update();

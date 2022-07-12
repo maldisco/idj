@@ -20,28 +20,36 @@ void Alien::Start(){
     minionArray.push_back(Game::GetInstance().GetState().AddObject(minion));
 
     GameObject* minion2 = new GameObject();
-    minion2->AddComponent(new Minion(*minion2, Game::GetInstance().GetState().GetObjectPtr(&associated), PI/2));
+    minion2->AddComponent(new Minion(*minion2, Game::GetInstance().GetState().GetObjectPtr(&associated), PI/3));
     minionArray.push_back(Game::GetInstance().GetState().AddObject(minion2));
 
     GameObject* minion3 = new GameObject();
-    minion3->AddComponent(new Minion(*minion3, Game::GetInstance().GetState().GetObjectPtr(&associated), PI));
+    minion3->AddComponent(new Minion(*minion3, Game::GetInstance().GetState().GetObjectPtr(&associated), 2*PI/3));
     minionArray.push_back(Game::GetInstance().GetState().AddObject(minion3));
 
     GameObject* minion4 = new GameObject();
-    minion4->AddComponent(new Minion(*minion4, Game::GetInstance().GetState().GetObjectPtr(&associated), 3*PI/2));
+    minion4->AddComponent(new Minion(*minion4, Game::GetInstance().GetState().GetObjectPtr(&associated), 3*PI/3));
     minionArray.push_back(Game::GetInstance().GetState().AddObject(minion4));    
+
+    GameObject* minion5 = new GameObject();
+    minion5->AddComponent(new Minion(*minion5, Game::GetInstance().GetState().GetObjectPtr(&associated), 4*PI/3));
+    minionArray.push_back(Game::GetInstance().GetState().AddObject(minion5));   
+
+    GameObject* minion6 = new GameObject();
+    minion6->AddComponent(new Minion(*minion6, Game::GetInstance().GetState().GetObjectPtr(&associated), 5*PI/3));
+    minionArray.push_back(Game::GetInstance().GetState().AddObject(minion6));   
 }
 
 void Alien::Update(float dt){
     if(InputManager::GetInstance().MousePress(LEFT_MOUSE_BUTTON)){
+        // Shoot in mouse click dir
         taskQueue.emplace( Action(Action::ActionType::SHOOT,
          InputManager::GetInstance().GetMouseX()+Camera::pos.x,
          InputManager::GetInstance().GetMouseY()+Camera::pos.y) );
     }
 
     if(InputManager::GetInstance().MousePress(RIGHT_MOUSE_BUTTON)){
-        // add a move action to queue
-        // to mouse direction
+        // Move to mouse click
         taskQueue.emplace( Action(Action::ActionType::MOVE,
          InputManager::GetInstance().GetMouseX()+Camera::pos.x,
          InputManager::GetInstance().GetMouseY()+Camera::pos.y));        

@@ -6,6 +6,9 @@
 
 #define ARC PI/64
 
+/**
+ * @brief Entity linked to alien
+ */
 class Minion : public Component {
     public:
         Minion(GameObject& associated, std::weak_ptr<GameObject> alienCenter, float arcOffsetDeg = 0);

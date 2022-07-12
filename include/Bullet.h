@@ -2,7 +2,10 @@
 #define BULLET_H
 #include "Component.h"
 
-
+/**
+ * @brief Object alien shoots
+ * 
+ */
 class Bullet : public Component{
     public:
         Bullet(GameObject& associated, float angle, float speed, int damage, float maxDistance, std::string sprite);
