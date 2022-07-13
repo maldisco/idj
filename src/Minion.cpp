@@ -15,8 +15,8 @@ Minion::Minion(GameObject& associated, std::weak_ptr<GameObject> alienCenter, fl
 }
 
 void Minion::Update(float dt){
-    if(alienCenter.expired()){
-        return;
+    if(alienCenter.lock()->IsDead()){
+        associated.RequestDelete();
     }
     // increase arc
     arc += ARC;
@@ -32,7 +32,7 @@ void Minion::Shoot(Vec2 target){
     float angle = dir.SlopeX();
 
     GameObject* bulletObject = new GameObject();
-    // Bullet(associated, angle, speed, damage, maxDistance, sprite)
+    // Bullet(associated, angle, speed, damage, maxDistance, sprite, frameTime, frameCount)
     bulletObject->AddComponent(new Bullet(*bulletObject, angle, 500, 10, 500, "assets/img/minionbullet2.png", 0.05, 3));
     bulletObject->box.x = associated.box.x;
     bulletObject->box.y = associated.box.y;

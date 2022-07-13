@@ -1,5 +1,4 @@
 #include "TileSet.h"
-#include "iostream"
 
 TileSet::TileSet(GameObject& associated, int tileWidth, int tileHeight, std::string file) : tileHeight(tileHeight), tileWidth(tileWidth),  tileSet(file, associated, 1, 1.0){
     this->columns = tileSet.GetWidth() / tileWidth;

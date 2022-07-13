@@ -46,7 +46,7 @@ class Sprite : public Component{
          * @param frameCount 
          * @param frameTime 
          */
-        Sprite(std::string file, GameObject& associated, int frameCount, float frameTime);
+        Sprite(std::string file, GameObject& associated, int frameCount = 1, float frameTime = 1);
         ~Sprite();
 
         /**

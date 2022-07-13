@@ -2,6 +2,9 @@
 #include "algorithm"
 #include "Component.h"
 
+#define  INCLUDE_SDL_IMAGE
+#include "SDL_include.h"
+
 GameObject::GameObject() : started(false), angleDeg(0), isDead(false) {}
 
 GameObject::~GameObject(){
@@ -12,7 +15,6 @@ void GameObject::Start(){
     for(unsigned i=0; i<components.size(); i++){
         components.at(i)->Start();
     }
-
     started = true;
 }
 

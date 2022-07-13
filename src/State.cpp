@@ -6,6 +6,7 @@
 #include "InputManager.h"
 #include "CameraFollower.h"
 #include "Alien.h"
+#include "PenguinBody.h"
 
 State::State() : music("assets/audio/stageState.ogg"), quitRequested(false), started(false){
     
@@ -31,6 +32,16 @@ State::State() : music("assets/audio/stageState.ogg"), quitRequested(false), sta
 	enemy->box.x = 512;
 	enemy->box.y = 300;
 	AddObject(enemy);
+
+	// main char
+	GameObject* penguin = new GameObject();
+	penguin->AddComponent(new PenguinBody(*penguin));
+	penguin->box.x = 704;
+	penguin->box.y = 640;
+	AddObject(penguin);
+
+	// make penguin as camera focus
+	Camera::Follow(penguin);
     
     music.Play();
 }

@@ -2,6 +2,7 @@
 #define COMPONENT_H
 
 #include "string"
+#include "bits/stdc++.h"
 #include "GameObject.h"
 
 /**
