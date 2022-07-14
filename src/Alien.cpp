@@ -58,8 +58,7 @@ void Alien::Update(float dt){
             // if distance to click position is less than speed
             if(Vec2::Distance(associated.box.Center(), taskQueue.front().pos) < (speed*dt).Magnitude()){
                 // go to click position
-                associated.box.x = taskQueue.front().pos.x - associated.box.w/2;
-                associated.box.y = taskQueue.front().pos.y - associated.box.h/2;
+                associated.box.Centered(taskQueue.front().pos);
                 taskQueue.pop();
             } else {
                 // move in direction to the click

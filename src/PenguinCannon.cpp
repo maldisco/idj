@@ -14,9 +14,7 @@ void PenguinCannon::Update(float dt){
         associated.RequestDelete();
     }
 
-    Vec2 pbodyCenter = pbody.lock()->box.Center();
-    associated.box.x = pbodyCenter.x - associated.box.w/2;
-    associated.box.y = pbodyCenter.y - associated.box.h/2;
+    associated.box.Centered(pbody.lock()->box.Center());
 
     Vec2 mouseCoord = {InputManager::GetInstance().GetMouseX()+Camera::pos.x, InputManager::GetInstance().GetMouseY()+Camera::pos.y};
     Vec2 direction = mouseCoord - associated.box.Center();
@@ -36,7 +34,7 @@ void PenguinCannon::Shoot(){
     Vec2 offset = (Vec2(associated.box.x+associated.box.w, associated.box.y+associated.box.h/2) - associated.box.Center()).Rotate(associated.angleDeg*PI/180);
     Vec2 start =  associated.box.Center() + offset;
 
-    bulletObject->box.x = start.x;
+    bulletObject->box.x = start.x - bulletObject->box.w/6; // divided by 6 cause bullet is composed by 3 equal-sized frames, so its width of 1 frame divided by 2
     bulletObject->box.y = start.y;
     bulletObject->angleDeg = associated.angleDeg;
     Game::GetInstance().GetState().AddObject(bulletObject);

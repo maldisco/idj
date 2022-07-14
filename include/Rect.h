@@ -24,6 +24,13 @@ class Rect{
         Vec2 Center();
 
         /**
+         * @brief center box in a given point
+         * 
+         * @param center 
+         */
+        void Centered(Vec2 center);
+
+        /**
          * @brief distance between the center of two rectangles
          * 
          * @param r1 

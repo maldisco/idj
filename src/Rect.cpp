@@ -9,6 +9,11 @@ Vec2 Rect::Center(){
     return Vec2(this->x + this->w/2, this->y + this->h/2);
 }
 
+void Rect::Centered(Vec2 center){
+    this->x = center.x - this->w/2;
+    this->y = center.y - this->h/2;
+}
+
 Rect Rect::operator+(Vec2 v2){
     return Rect(x + v2.x, y + v2.y, w, h);
 }
@@ -18,13 +23,7 @@ Rect Rect::operator=(Rect rect){
 }
 
 float Rect::Distance(Rect r1, Rect r2){
-    Vec2 centerR1 = r1.Center();
-    Vec2 centerR2 = r2.Center();
-
-    float dx = abs(centerR1.x - centerR2.x);
-    float dy = abs(centerR1.y - centerR2.y);
-
-    return sqrt(dx*dx + dy*dy);
+    return Vec2::Distance(r1.Center(), r2.Center());
 }
 
 bool Rect::Contains( Vec2 v2 ){

@@ -10,8 +10,7 @@ Minion::Minion(GameObject& associated, std::weak_ptr<GameObject> alienCenter, fl
     associated.AddComponent(minionSprite);
 
     Vec2 origin = Vec2(100, 0).Rotate(arc) + alienCenter.lock().get()->box.Center();
-    associated.box.x = origin.x - associated.box.w/2;
-    associated.box.y = origin.y - associated.box.h/2;
+    associated.box.Centered(origin);
 }
 
 void Minion::Update(float dt){
@@ -23,8 +22,7 @@ void Minion::Update(float dt){
     associated.angleDeg = arc*180/PI;
 
     Vec2 origin = Vec2(100, 0).Rotate(arc) + alienCenter.lock().get()->box.Center();
-    associated.box.x = origin.x - associated.box.w/2;
-    associated.box.y = origin.y - associated.box.h/2;
+    associated.box.Centered(origin);
 }
 
 void Minion::Shoot(Vec2 target){
