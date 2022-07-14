@@ -2,6 +2,7 @@
 #define VEC2_H
 
 #include <string>
+#include "math.h"
 #define PI 3.14159265
 
 /**
@@ -15,23 +16,9 @@ class Vec2{
         Vec2();
         Vec2(float x, float y);
 
-        Vec2 operator+(Vec2 v2);
-        Vec2 operator-(Vec2 v2);
-        Vec2 operator*(float n);
-
-        /**
-         * @brief magnitude or length of the vector
-         * 
-         * @return float 
-         */
-        float Magnitude();
-
-        /**
-         * @brief normalize the vector (magnitude=1)
-         * 
-         * @return Vec2 
-         */
-        Vec2 Normalize();
+        Vec2 operator+(const Vec2& rhs) const;
+        Vec2 operator-(const Vec2& rhs) const;
+        Vec2 operator*(const float rhs) const;
 
         /**
          * @brief the distance between two vectors
@@ -41,15 +28,6 @@ class Vec2{
          * @return float 
          */
         static float Distance(Vec2 v1, Vec2 v2);
-
-        /**
-         * @brief dot product of 2 vectors
-         * 
-         * @param v1 
-         * @param v2 
-         * @return float 
-         */
-        static float Dot(Vec2 v1, Vec2 v2);
 
         /**
          * @brief slope of a line from 2 points
@@ -66,10 +44,45 @@ class Vec2{
         float SlopeX();
 
         /**
-         * @brief Rotate the vector
+         * @brief Return magnitude of vector
          * 
-         * @param angle 
+         * @param vec 
+         * @return float 
          */
-        Vec2 Rotate(float angle);
+        static inline float Magnitude(const Vec2& vec) {
+	        return sqrt(vec.x * vec.x + vec.y * vec.y);
+        }
+
+        /**
+         * @brief Return normalized vector (magnitude = 1)
+         * 
+         * @param vec 
+         * @return Vec2 
+         */
+        static inline Vec2 Normalize(const Vec2& vec) {
+	        return vec * (1.f / Magnitude(vec));
+        }
+
+        /**
+         * @brief Dot product of 2 vectors
+         * 
+         * @param v1 
+         * @param v2 
+         * @return float 
+         */
+        static inline float Dot(const Vec2& v1, const Vec2& v2) {
+	        return v1.x*v2.x + v1.y*v2.y;
+        }
+
+        /**
+         * @brief Rotate the vector by some angle
+         * 
+         * @param vec 
+         * @param angle 
+         * @return Vec2 
+         */
+        static inline Vec2 Rotate(const Vec2& vec, float angle){
+            return Vec2(vec.x*cos(angle) - vec.y*sin(angle), vec.y*cos(angle) + vec.x*sin(angle));
+        }
 };
 #endif

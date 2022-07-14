@@ -1,19 +1,21 @@
 #include "Bullet.h"
 #include "sprite.h"
+#include "Collider.h"
 
 Bullet::Bullet(GameObject& associated, float angle, float speed, int damage, float maxDistance, std::string sprite, float frameTime, int frameCount) : Component(associated),
  distanceLeft(maxDistance), damage(damage){
     associated.AddComponent(new Sprite(sprite, associated, frameCount, frameTime));
+    associated.AddComponent(new Collider(associated));
 
-    this->speed.x = Vec2(speed, 0).Rotate(angle).x;
-    this->speed.y = Vec2(speed, 0).Rotate(angle).y;
+    this->speed.x = Vec2::Rotate(Vec2(speed, 0), angle).x;
+    this->speed.y = Vec2::Rotate(Vec2(speed, 0), angle).y;
 } 
 
 void Bullet::Update(float dt){
     associated.box.x += speed.x*dt;
     associated.box.y += speed.y*dt;
 
-    distanceLeft -= (speed*dt).Magnitude();
+    distanceLeft -= Vec2::Magnitude(speed*dt);
     if(distanceLeft <= 0){
         associated.RequestDelete();
     }

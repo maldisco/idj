@@ -1,6 +1,7 @@
 #include "Alien.h"
 #include "Minion.h"
 #include "Sprite.h"
+#include "Collider.h"
 #include "InputManager.h"
 #include "Camera.h"
 #include "Game.h"
@@ -8,6 +9,7 @@
 
 Alien::Alien(GameObject& associated) : Component(associated), speed({100, 100}), hp(100){
     associated.AddComponent(new Sprite("assets/img/alien.png", associated, 1, 1.0));
+    associated.AddComponent(new Collider(associated));
 }
 
 Alien::~Alien(){
@@ -53,10 +55,10 @@ void Alien::Update(float dt){
         if(taskQueue.front().type == Action::ActionType::MOVE){
             // turn speed vector in mouse click direction
             Vec2 dir = taskQueue.front().pos -  associated.box.Center();
-            Vec2 newSpeed = speed.Rotate(Vec2::Slope(dir, speed));
+            Vec2 newSpeed = Vec2::Rotate(speed, Vec2::Slope(dir, speed));
 
             // if distance to click position is less than speed
-            if(Vec2::Distance(associated.box.Center(), taskQueue.front().pos) < (speed*dt).Magnitude()){
+            if(Vec2::Distance(associated.box.Center(), taskQueue.front().pos) < Vec2::Magnitude(speed*dt)){
                 // go to click position
                 associated.box.Centered(taskQueue.front().pos);
                 taskQueue.pop();

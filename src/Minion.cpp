@@ -1,5 +1,6 @@
 #include "Minion.h"
 #include "Bullet.h"
+#include "Collider.h"
 #include "Game.h"
 #include <cmath>
 
@@ -7,9 +8,11 @@ Minion::Minion(GameObject& associated, std::weak_ptr<GameObject> alienCenter, fl
     float scale = 1 + (float)(rand()%50)/100;
     Sprite* minionSprite = new Sprite("assets/img/minion.png", associated, 1, 1.0);
     minionSprite->SetScaleX(sqrt(scale), sqrt(scale));
-    associated.AddComponent(minionSprite);
 
-    Vec2 origin = Vec2(100, 0).Rotate(arc) + alienCenter.lock().get()->box.Center();
+    associated.AddComponent(minionSprite);
+    associated.AddComponent(new Collider(associated));
+
+    Vec2 origin =  Vec2::Rotate(Vec2(100, 0), arc) + alienCenter.lock().get()->box.Center();
     associated.box.Centered(origin);
 }
 
@@ -21,7 +24,7 @@ void Minion::Update(float dt){
     arc += ARC;
     associated.angleDeg = arc*180/PI;
 
-    Vec2 origin = Vec2(100, 0).Rotate(arc) + alienCenter.lock().get()->box.Center();
+    Vec2 origin = Vec2::Rotate(Vec2(100, 0), arc) + alienCenter.lock().get()->box.Center();
     associated.box.Centered(origin);
 }
 

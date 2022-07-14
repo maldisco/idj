@@ -1,6 +1,7 @@
 #include "PenguinBody.h"
 #include "PenguinCannon.h"
 #include "Sprite.h"
+#include "Collider.h"
 #include "Game.h"
 #include "InputManager.h"
 
@@ -8,6 +9,7 @@ PenguinBody* PenguinBody::player;
 PenguinBody::PenguinBody(GameObject& associated) : Component(associated), speed({1,0}), linearSpeed(0), angle(0), hp(100){
     player = this;
     associated.AddComponent(new Sprite("assets/img/penguin.png", associated, 1, 1.0));
+    associated.AddComponent(new Collider(associated));
 }
 
 PenguinBody::~PenguinBody(){
@@ -29,12 +31,12 @@ void PenguinBody::Update(float dt){
         linearSpeed = std::max(linearSpeed-5, float(0));
     }
     if (InputManager::GetInstance().IsKeyDown(A_KEY)){
-        Vec2 newSpeed = speed.Rotate(-PI/64);
+        Vec2 newSpeed = Vec2::Rotate(speed, -PI/64);
         speed.x = newSpeed.x;
         speed.y = newSpeed.y;  
     } 
     if (InputManager::GetInstance().IsKeyDown(D_KEY)){
-        Vec2 newSpeed = speed.Rotate(PI/64);
+        Vec2 newSpeed = Vec2::Rotate(speed, PI/64);
         speed.x = newSpeed.x;
         speed.y = newSpeed.y;  
     }   

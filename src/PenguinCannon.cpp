@@ -2,11 +2,13 @@
 #include "Sprite.h"
 #include "InputManager.h"
 #include "Bullet.h"
+#include "Collider.h"
 #include "Game.h"
 #include "Camera.h"
 
 PenguinCannon::PenguinCannon(GameObject& associated, std::weak_ptr<GameObject> penguinBody) : Component(associated), pbody(penguinBody), angle(0){
     associated.AddComponent(new Sprite("assets/img/cubngun.png", associated));
+    associated.AddComponent(new Collider(associated));
 }
 
 void PenguinCannon::Update(float dt){
@@ -31,7 +33,7 @@ void PenguinCannon::Shoot(){
     bulletObject->AddComponent(new Bullet(*bulletObject, associated.angleDeg*PI/180, 500, 10, 500, "assets/img/minionbullet2.png", 0.05, 3));
 
     // calculating bullet starting point
-    Vec2 offset = (Vec2(associated.box.x+associated.box.w, associated.box.y+associated.box.h/2) - associated.box.Center()).Rotate(associated.angleDeg*PI/180);
+    Vec2 offset = Vec2::Rotate(Vec2(associated.box.x+associated.box.w, associated.box.y+associated.box.h/2) - associated.box.Center(), associated.angleDeg*PI/180);
     Vec2 start =  associated.box.Center() + offset;
 
     bulletObject->box.x = start.x - bulletObject->box.w/6; // divided by 6 cause bullet is composed by 3 equal-sized frames, so its width of 1 frame divided by 2

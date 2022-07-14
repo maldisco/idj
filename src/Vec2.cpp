@@ -5,33 +5,20 @@
 Vec2::Vec2() : x(0), y(0){}
 Vec2::Vec2(float x, float y) : x(x), y(y) {}
 
-Vec2 Vec2::operator+(Vec2 v2){
-    return Vec2(x + v2.x, y + v2.y);
+Vec2 Vec2::operator+(const Vec2& rhs) const {
+   return Vec2(x + rhs.x, y + rhs.y);
 }
 
-Vec2 Vec2::operator-(Vec2 v2){
-    return Vec2(x - v2.x, y - v2.y);
+Vec2 Vec2::operator-(const Vec2& rhs) const {
+   return Vec2(x - rhs.x, y - rhs.y);
 }
 
-Vec2 Vec2::operator*(float n){
-    return Vec2(x*n, y*n);
-}
-
-float Vec2::Magnitude(){
-    return sqrt(x*x + y*y);
-}
-
-Vec2 Vec2::Normalize(){
-    float mag = Magnitude();
-    return Vec2(x/mag, y/mag);
+Vec2 Vec2::operator*(const float rhs) const {
+   return Vec2(x * rhs, y * rhs);
 }
 
 float Vec2::Distance(Vec2 v1, Vec2 v2){
-    return (v1 - v2).Magnitude();
-}
-
-float Vec2::Dot(Vec2 v1, Vec2 v2){
-    return v1.x*v2.x + v1.y*v2.y; 
+    return Magnitude(v1 - v2);
 }
 
 float Vec2::SlopeX(){
@@ -42,6 +29,3 @@ float Vec2::Slope(Vec2 v1, Vec2 v2){
     return atan2(v1.y, v1.x) - atan2(v2.y, v2.x);
 }
 
-Vec2 Vec2::Rotate(float angle){
-    return Vec2(x*cos(angle) - y*sin(angle), y*cos(angle) + x*sin(angle));
-}
