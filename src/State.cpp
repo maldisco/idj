@@ -8,8 +8,7 @@
 #include "Alien.h"
 #include "PenguinBody.h"
 
-State::State() : music("assets/audio/stageState.ogg"), quitRequested(false), started(false){
-    
+State::State() : music("assets/audio/stageState.ogg"), quitRequested(false), started(false){    
 	// background
 	GameObject* bg = new GameObject();
 	bg->AddComponent(new Sprite("assets/img/ocean.jpg", *bg, 1, 1.0));
@@ -26,13 +25,6 @@ State::State() : music("assets/audio/stageState.ogg"), quitRequested(false), sta
 	go->box.y = 0;
 	AddObject(go);
 
-	// enemy
-	GameObject* enemy = new GameObject();
-	enemy->AddComponent(new Alien(*enemy, 0));
-	enemy->box.x = 512;
-	enemy->box.y = 300;
-	AddObject(enemy);
-
 	// main char
 	GameObject* penguin = new GameObject();
 	penguin->AddComponent(new PenguinBody(*penguin));
@@ -43,6 +35,13 @@ State::State() : music("assets/audio/stageState.ogg"), quitRequested(false), sta
 	// make penguin as camera focus
 	Camera::Follow(penguin);
     
+	// enemy
+	GameObject* alien = new GameObject();
+	alien->AddComponent(new Alien(*alien));
+	alien->box.x = 512 - alien->box.w/2;
+	alien->box.y = 300 - alien->box.h/2;
+	AddObject(alien);
+
     music.Play();
 }
 
@@ -53,8 +52,8 @@ State::~State(){
 void State::Start(){
 	LoadAssets();
 
-	for(auto go : objectArray){
-		go->Start();
+	for(unsigned i = 0; i < objectArray.size(); i++){
+		objectArray[i]->Start();
 	}
 
 	started = true;
@@ -106,9 +105,9 @@ std::weak_ptr<GameObject> State::AddObject( GameObject* go ){
 }
 
 std::weak_ptr<GameObject> State::GetObjectPtr( GameObject* go ){
-	for(auto s : objectArray){
-		if(s.get() == go){
-			return std::weak_ptr<GameObject>(s);
+	for(unsigned i = 0; i < objectArray.size(); i++){
+		if(objectArray[i].get() == go){
+			return std::weak_ptr<GameObject>(objectArray[i]);
 		}
 	}
 

@@ -5,10 +5,9 @@
 #include "InputManager.h"
 
 PenguinBody* PenguinBody::player;
-PenguinBody::PenguinBody(GameObject& associated) : Component(associated), linearSpeed(0), speed({0,0}), angle(0), hp(100){
+PenguinBody::PenguinBody(GameObject& associated) : Component(associated), speed({1,0}), linearSpeed(0), angle(0), hp(100){
     player = this;
-
-    associated.AddComponent(new Sprite("assets/img/penguin.png", associated));
+    associated.AddComponent(new Sprite("assets/img/penguin.png", associated, 1, 1.0));
 }
 
 PenguinBody::~PenguinBody(){
@@ -16,29 +15,33 @@ PenguinBody::~PenguinBody(){
 }
 
 void PenguinBody::Start(){
-    std::cout << "entra penguin body start" << std::endl;
     GameObject* go = new GameObject();
     go->AddComponent(new PenguinCannon(*go, Game::GetInstance().GetState().GetObjectPtr(&associated)));
     this->pcannon = Game::GetInstance().GetState().AddObject(go);
-    std::cout << "sai penguin body start" << std::endl;
 }
 
 void PenguinBody::Update(float dt){
     if(InputManager::GetInstance().IsKeyDown(W_KEY)){
-        linearSpeed = std::min(linearSpeed+5, float(100));
-    } 
-    if (InputManager::GetInstance().IsKeyDown(S_KEY)){
-        linearSpeed = std::max(linearSpeed-5, float(-100));
-    } 
+        linearSpeed = std::min(linearSpeed+5, float(300));
+    } else if (InputManager::GetInstance().IsKeyDown(S_KEY)){
+        linearSpeed = std::max(linearSpeed-5, float(-300));
+    } else {
+        linearSpeed = std::max(linearSpeed-5, float(0));
+    }
     if (InputManager::GetInstance().IsKeyDown(A_KEY)){
-        angle = -PI/2;   
+        Vec2 newSpeed = speed.Rotate(-PI/64);
+        speed.x = newSpeed.x;
+        speed.y = newSpeed.y;  
     } 
     if (InputManager::GetInstance().IsKeyDown(D_KEY)){
-        angle = PI/2;
+        Vec2 newSpeed = speed.Rotate(PI/64);
+        speed.x = newSpeed.x;
+        speed.y = newSpeed.y;  
     }   
-    
-    associated.box.x += (speed*linearSpeed).Rotate(angle).x*dt;
-    associated.box.y += (speed*linearSpeed).Rotate(angle).y*dt;
+
+    associated.box.x += (speed*linearSpeed).x*dt;
+    associated.box.y += (speed*linearSpeed).y*dt;
+    associated.angleDeg = speed.SlopeX()*180/PI;
 
     if(hp <= 0){
         associated.RequestDelete();

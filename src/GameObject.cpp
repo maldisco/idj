@@ -13,20 +13,20 @@ GameObject::~GameObject(){
 
 void GameObject::Start(){
     for(unsigned i=0; i<components.size(); i++){
-        components.at(i)->Start();
+        components[i]->Start();
     }
     started = true;
 }
 
 void GameObject::Update(float dt){
     for(unsigned i=0; i<components.size(); i++){
-        components.at(i)->Update(dt);
+        components[i]->Update(dt);
     }
 }
 
 void GameObject::Render(){
     for(unsigned i=0; i<components.size(); i++){
-        components.at(i)->Render();
+        components[i]->Render();
     }
 }
 
@@ -61,9 +61,9 @@ Component* GameObject::GetComponent(std::string type){
     // iterate through components
     for(unsigned i=0; i<components.size(); i++){
         // if type (string like 'Sound' or 'Face') equals argument
-        if(components.at(i)->Is(type)){
+        if(components[i]->Is(type)){
             // return it
-            return components.at(i).get();
+            return components[i].get();
         }
     }
 

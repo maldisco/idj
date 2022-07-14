@@ -6,7 +6,7 @@
 #include "Game.h"
 
 
-Alien::Alien(GameObject& associated, int nMinions) : Component(associated), speed({100, 100}), hp(100){
+Alien::Alien(GameObject& associated) : Component(associated), speed({100, 100}), hp(100){
     associated.AddComponent(new Sprite("assets/img/alien.png", associated, 1, 1.0));
 }
 
@@ -20,24 +20,16 @@ void Alien::Start(){
     minionArray.push_back(Game::GetInstance().GetState().AddObject(minion));
 
     GameObject* minion2 = new GameObject();
-    minion2->AddComponent(new Minion(*minion2, Game::GetInstance().GetState().GetObjectPtr(&associated), PI/3));
+    minion2->AddComponent(new Minion(*minion2, Game::GetInstance().GetState().GetObjectPtr(&associated), PI/2));
     minionArray.push_back(Game::GetInstance().GetState().AddObject(minion2));
 
     GameObject* minion3 = new GameObject();
-    minion3->AddComponent(new Minion(*minion3, Game::GetInstance().GetState().GetObjectPtr(&associated), 2*PI/3));
+    minion3->AddComponent(new Minion(*minion3, Game::GetInstance().GetState().GetObjectPtr(&associated), PI));
     minionArray.push_back(Game::GetInstance().GetState().AddObject(minion3));
 
     GameObject* minion4 = new GameObject();
-    minion4->AddComponent(new Minion(*minion4, Game::GetInstance().GetState().GetObjectPtr(&associated), 3*PI/3));
-    minionArray.push_back(Game::GetInstance().GetState().AddObject(minion4));    
-
-    GameObject* minion5 = new GameObject();
-    minion5->AddComponent(new Minion(*minion5, Game::GetInstance().GetState().GetObjectPtr(&associated), 4*PI/3));
-    minionArray.push_back(Game::GetInstance().GetState().AddObject(minion5));   
-
-    GameObject* minion6 = new GameObject();
-    minion6->AddComponent(new Minion(*minion6, Game::GetInstance().GetState().GetObjectPtr(&associated), 5*PI/3));
-    minionArray.push_back(Game::GetInstance().GetState().AddObject(minion6));   
+    minion4->AddComponent(new Minion(*minion4, Game::GetInstance().GetState().GetObjectPtr(&associated), 3*PI/2));
+    minionArray.push_back(Game::GetInstance().GetState().AddObject(minion4));      
 }
 
 void Alien::Update(float dt){
