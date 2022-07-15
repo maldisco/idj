@@ -3,6 +3,8 @@
 #include "Sprite.h"
 #include "Collider.h"
 #include "Game.h"
+#include "Camera.h"
+#include "Bullet.h"
 #include "InputManager.h"
 
 PenguinBody* PenguinBody::player;
@@ -44,10 +46,19 @@ void PenguinBody::Update(float dt){
     associated.box.x += (speed*linearSpeed).x*dt;
     associated.box.y += (speed*linearSpeed).y*dt;
     associated.angleDeg = speed.SlopeX()*180/PI;
+}
 
-    if(hp <= 0){
-        associated.RequestDelete();
-        pcannon.lock()->RequestDelete();
+void PenguinBody::NotifyCollision(GameObject& other){
+    if(other.GetComponent("Bullet") != nullptr){
+        Bullet* bullet = (Bullet*)other.GetComponent("Bullet");
+        if(bullet->targetsPlayer){
+            this->hp -= 5;
+            if(this->hp <= 0){
+                Camera::Unfollow();
+                associated.RequestDelete();
+                pcannon.lock()->RequestDelete();
+            }
+        }
     }
 }
 

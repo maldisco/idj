@@ -5,6 +5,7 @@
 #include "InputManager.h"
 #include "Camera.h"
 #include "Game.h"
+#include "Bullet.h"
 
 
 Alien::Alien(GameObject& associated) : Component(associated), speed({100, 100}), hp(100){
@@ -87,9 +88,17 @@ void Alien::Update(float dt){
 
     // rotate alien sprite
     associated.angleDeg -= (ARC/2)*180/PI;
+}
 
-    if(hp <= 0){
-        associated.RequestDelete();
+void Alien::NotifyCollision(GameObject& other){
+    if(other.GetComponent("Bullet") != nullptr){
+        Bullet* bullet = (Bullet*)other.GetComponent("Bullet");
+        if(not bullet->targetsPlayer){
+            this->hp -= 5;
+            if(this->hp <= 0){
+                associated.RequestDelete();
+            }
+        }
     }
 }
 

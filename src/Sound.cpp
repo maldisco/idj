@@ -18,6 +18,7 @@ bool Sound::Is(std::string type){
 }
 
 void Sound::Render(){}
+void Sound::NotifyCollision(GameObject& other){}
 
 void Sound::Play(int times){
     channel = Mix_PlayChannel(-1, chunk, times-1);

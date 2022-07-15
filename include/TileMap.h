@@ -56,6 +56,7 @@ class TileMap : public Component{
 
         void Update(float dt);
         bool Is(std::string type);
+        void NotifyCollision(GameObject& other);
     
     private:
         /**

@@ -9,4 +9,11 @@ void CameraFollower::Update(float dt){
 }
 
 void CameraFollower::Render(){}
-bool CameraFollower::Is(std::string type){} 
+bool CameraFollower::Is(std::string type){
+    if(type.compare("Camera follower") == 0){
+        return true;
+    }
+
+    return false;
+} 
+void CameraFollower::NotifyCollision(GameObject& other){}

@@ -69,6 +69,8 @@ void Sprite::Render(){
     Render(associated.box.x - Camera::pos.x, associated.box.y - Camera::pos.y);
 }
 
+void Sprite::NotifyCollision(GameObject& other){}
+
 void Sprite::SetScaleX(float scaleX, float scaleY){
     // % of increase/decrease in size rate
     float widthChangeRate = scaleX - scale.x;

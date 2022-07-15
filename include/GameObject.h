@@ -39,6 +39,8 @@ class GameObject{
 
         void RemoveComponent(Component* cpt);
 
+        void NotifyCollision(GameObject& other);
+
         Component* GetComponent(std::string type);
 
     private:

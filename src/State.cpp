@@ -7,6 +7,7 @@
 #include "CameraFollower.h"
 #include "Alien.h"
 #include "PenguinBody.h"
+#include "Collision.cpp"
 
 State::State() : music("assets/audio/stageState.ogg"), quitRequested(false), started(false){    
 	// background
@@ -78,6 +79,19 @@ void State::Update(float dt){
         objectArray[i]->Update(dt);
     }
 
+	// check collidable objects
+	std::vector<std::weak_ptr<GameObject>> collidable = QueryObjectsBy("Collider");
+	for(unsigned i=0; i<collidable.size(); i++){
+		for(unsigned j=i+1; j<collidable.size(); j++){
+			if(Collision::IsColliding(collidable[i].lock()->box, collidable[j].lock()->box, collidable[i].lock()->angleDeg*PI/180, collidable[j].lock()->angleDeg*PI/180)){
+				GameObject* g1 = collidable[i].lock().get();
+				GameObject* g2 = collidable[j].lock().get();
+				g1->NotifyCollision(*g2);
+				g2->NotifyCollision(*g1);
+			}
+		}
+	}
+
 	// Check if object is dead
     for(unsigned i=0; i<objectArray.size(); i++){
         if( objectArray[i]->IsDead() ){
@@ -112,6 +126,17 @@ std::weak_ptr<GameObject> State::GetObjectPtr( GameObject* go ){
 	}
 
 	return {};
+}
+
+std::vector<std::weak_ptr<GameObject>> State::QueryObjectsBy(std::string component){
+	std::vector<std::weak_ptr<GameObject>> gameObjects;
+	for(unsigned i = 0; i < objectArray.size(); i++){
+		if(objectArray[i]->GetComponent(component) != nullptr){
+			gameObjects.push_back(objectArray[i]);
+		}
+	}
+
+	return gameObjects;
 }
 
 bool State::QuitRequested()

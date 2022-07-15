@@ -12,10 +12,9 @@ class CameraFollower : public Component {
         CameraFollower(GameObject& go);
 
         void Update(float dt);
-
         void Render();
-
         bool Is(std::string type);
+        void NotifyCollision(GameObject& other);
 };
 
 #endif

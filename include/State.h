@@ -71,5 +71,13 @@ class State{
         std::weak_ptr< GameObject > AddObject(GameObject* go);
 
         std::weak_ptr< GameObject > GetObjectPtr(GameObject* go);
+
+        /**
+         * @brief return a vector of gameobjects that contain some component
+         * 
+         * @param component 
+         * @return std::vector<std::weak_ptr<GameObject>> 
+         */
+        std::vector<std::weak_ptr<GameObject>> QueryObjectsBy(std::string component);
 };
 #endif
