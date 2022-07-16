@@ -2,11 +2,12 @@
 #define ALIEN_H
 
 #include "Component.h"
+#include "Timer.h"
 #include <queue>
 
 
 /**
- * @brief Entity that responds to mouse inputs
+ * @brief Main enemy
  * 
  */
 class Alien : public Component{
@@ -23,26 +24,17 @@ class Alien : public Component{
         void Update(float dt);
         void Render();
         void NotifyCollision(GameObject& other);
-
         bool Is(std::string type);
-    
+
+        static int alienCount;
     private:
-        /**
-         * @brief Represent an action (move/shoot and direction)
-         */
-        class Action{
-            public:
-                enum ActionType{ MOVE, SHOOT };
-                Action(ActionType type , float x, float y) : type(type), pos({x, y}){};
-
-                ActionType type;
-                Vec2 pos;
-        };
-
+        enum AlienState{ MOVING, RESTING };
+        AlienState state;
+        Timer restTimer;
+        Vec2 destination;
         Vec2 speed;
         int hp;
 
-        std::queue<Action> taskQueue;
         std::vector<std::weak_ptr<GameObject>> minionArray;
 };
 #endif

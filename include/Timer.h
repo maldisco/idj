@@ -1,6 +1,10 @@
 #ifndef TIMER_H
 #define TIMER_H
 
+/**
+ * @brief Control time-related mechanics over game objects
+ * 
+ */
 class Timer{
     public:
         Timer();

@@ -9,13 +9,16 @@
 #include "Bullet.h"
 
 
-Alien::Alien(GameObject& associated) : Component(associated), speed({100, 100}), hp(100){
+int Alien::alienCount = 0;
+Alien::Alien(GameObject& associated) : Component(associated), speed({100, 100}), hp(100), state(RESTING), restTimer(){
     associated.AddComponent(new Sprite("assets/img/alien.png", associated, 1, 1.0));
     associated.AddComponent(new Collider(associated));
+    Alien::alienCount++;
 }
 
 Alien::~Alien(){
     minionArray.clear();
+    Alien::alienCount--;
 }
 
 void Alien::Start(){
@@ -37,57 +40,41 @@ void Alien::Start(){
 }
 
 void Alien::Update(float dt){
-    if(InputManager::GetInstance().MousePress(LEFT_MOUSE_BUTTON)){
-        // Shoot in mouse click dir
-        taskQueue.emplace( Action(Action::ActionType::SHOOT,
-         InputManager::GetInstance().GetMouseX()+Camera::pos.x,
-         InputManager::GetInstance().GetMouseY()+Camera::pos.y) );
-    }
+    // rotate alien sprite
+    associated.angleDeg -= (ARC/2)*180/PI;
 
-    if(InputManager::GetInstance().MousePress(RIGHT_MOUSE_BUTTON)){
-        // Move to mouse click
-        taskQueue.emplace( Action(Action::ActionType::MOVE,
-         InputManager::GetInstance().GetMouseX()+Camera::pos.x,
-         InputManager::GetInstance().GetMouseY()+Camera::pos.y));        
-    }
-
-    // if there is a task in queue
-    if(!taskQueue.empty()){
-        // if task is MOVE
-        if(taskQueue.front().type == Action::ActionType::MOVE){
-            // turn speed vector in mouse click direction
-            Vec2 dir = taskQueue.front().pos -  associated.box.Center();
-            Vec2 newSpeed = Vec2::Rotate(speed, Vec2::Slope(dir, speed));
-
-            // if distance to click position is less than speed
-            if(Vec2::Distance(associated.box.Center(), taskQueue.front().pos) < Vec2::Magnitude(speed*dt)){
-                // go to click position
-                associated.box.Centered(taskQueue.front().pos);
-                taskQueue.pop();
-            } else {
-                // move in direction to the click
-                associated.box = associated.box + newSpeed*dt;
-            }
-        // if task is SHOOT
+    if(state == AlienState::RESTING){
+        if(restTimer.Get() >= 0.5f){
+            destination = Camera::pos + Vec2(CAMERA_WIDTH/2, CAMERA_HEIGHT/2);
+            Vec2 direction = destination - associated.box.Center();
+            speed = Vec2::Rotate(speed, Vec2::Slope(direction, speed));
+            state = MOVING;
         } else {
+            restTimer.Update(dt);
+        }
+    } else {
+        if(Vec2::Distance(associated.box.Center(), destination) < 5.0f){
+            destination = Camera::pos + Vec2(CAMERA_WIDTH/2, CAMERA_HEIGHT/2);
             // search for minion closer to mouse click
             int closerDistance = INT_MAX;
             std::weak_ptr<GameObject> closerMinion;
             for(auto minion : minionArray){
-                float distance = Vec2::Distance(minion.lock()->box.Center(), taskQueue.front().pos);
+                float distance = Vec2::Distance(minion.lock()->box.Center(), destination);
                 if(distance < closerDistance){
                     closerDistance = distance;
                     closerMinion = minion;
                 }
             }
             Minion* minion = (Minion*)(closerMinion.lock()->GetComponent("Minion"));
-            minion->Shoot(taskQueue.front().pos);
-            taskQueue.pop();
+            minion->Shoot(destination);
+
+            state = RESTING;
+            restTimer.Restart();
+        } else {
+            associated.box = associated.box + speed*dt;
         }
     }
 
-    // rotate alien sprite
-    associated.angleDeg -= (ARC/2)*180/PI;
 }
 
 void Alien::NotifyCollision(GameObject& other){
