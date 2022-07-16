@@ -9,6 +9,14 @@
  */
 class TileSet{
     public:
+        /**
+         * @brief Construct a new Tile Set object
+         * 
+         * @param associated 
+         * @param tileWidth 
+         * @param tileHeight 
+         * @param file 
+         */
         TileSet(GameObject& associated, int tileWidth, int tileHeight, std::string file);
 
         /**

@@ -12,6 +12,11 @@
  */
 class Sound : public Component{
     public:
+        /**
+         * @brief Construct a new Sound object
+         * 
+         * @param associated 
+         */
         Sound(GameObject& associated);
         Sound(std::string file, GameObject& associated);
 

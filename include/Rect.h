@@ -13,8 +13,7 @@ class Rect{
         Rect();
         Rect(float x, float y, float w, float h);
 
-        Rect operator+(Vec2 v2);
-        Rect operator=(Rect rect);
+        Rect operator+(const Vec2& rhs) const;
 
         /**
          * @brief returns the point in the center of the rectangle

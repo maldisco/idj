@@ -11,6 +11,11 @@
  */
 class Alien : public Component{
     public:
+        /**
+         * @brief Construct a new Alien object
+         * 
+         * @param associated 
+         */
         Alien(GameObject& associated);
         ~Alien();
 

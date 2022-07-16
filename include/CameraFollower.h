@@ -9,7 +9,12 @@
  */
 class CameraFollower : public Component {
     public:
-        CameraFollower(GameObject& go);
+        /**
+         * @brief Construct a new Camera Follower object
+         * 
+         * @param associated 
+         */
+        CameraFollower(GameObject& associated);
 
         void Update(float dt);
         void Render();

@@ -7,6 +7,13 @@ class Collider : public Component {
     public:
         Rect box;
 
+        /**
+         * @brief Construct a new Collider object
+         * 
+         * @param associated 
+         * @param scale 
+         * @param offset 
+         */
         Collider(GameObject& associated, Vec2 scale = {1, 1}, Vec2 offset = {0, 0});
         void Update(float dt);
         void Render();

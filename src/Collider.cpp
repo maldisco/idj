@@ -7,18 +7,9 @@ Collider::Collider(GameObject& associated, Vec2 scale, Vec2 offset) : Component(
 }
 
 void Collider::Update(float dt){
-    this->box.x = associated.box.x;
-    this->box.y = associated.box.y;
-    this->box.w = associated.box.w;
-    this->box.h = associated.box.h;
-
-
-    this->box.w = this->box.w*scale.x;
-    this->box.h = this->box.h*scale.y;
+	this->box = Rect(associated.box.x, associated.box.y, associated.box.w*scale.x, associated.box.h*scale.y);
     this->box.Centered(associated.box.Center());
-
-    this->box.x = this->box.x + Vec2::Rotate(offset, associated.angleDeg*PI/180).x;
-    this->box.y = this->box.y + Vec2::Rotate(offset, associated.angleDeg*PI/180).y;
+	this->box = this->box + Vec2::Rotate(offset, associated.angleDeg*PI/180);
 }
 
 void Collider::Render(){

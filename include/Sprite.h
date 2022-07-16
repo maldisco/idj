@@ -5,6 +5,7 @@
 #include "SDL_include.h"
 
 #include "Component.h"
+#include "Timer.h"
 
 #include <string>
 
@@ -29,24 +30,30 @@ class Sprite : public Component{
         int currentFrame;
         float timeElapsed;
         float frameTime;
+        float secondsToSelfDestruct;
+        Timer selfDestructCount;
     
     public:
         /**
-         * @brief Initialize texture as nullptr
+         * @brief Construct a new Sprite object
          * 
          * @param associated 
+         * @param frameCount 
+         * @param frameTime 
+         * @param secondsToSelfDestruct 
          */
-        Sprite(GameObject& associated, int frameCount, float frameTime);
+        Sprite(GameObject& associated, int frameCount, float frameTime, float secondsToSelfDestruct = 0);
         
         /**
-         * @brief Initializes texture as file
+         * @brief Construct a new Sprite object
          * 
          * @param file 
          * @param associated 
          * @param frameCount 
          * @param frameTime 
+         * @param secondsToSelfDestruct 
          */
-        Sprite(std::string file, GameObject& associated, int frameCount = 1, float frameTime = 1);
+        Sprite(std::string file, GameObject& associated, int frameCount = 1, float frameTime = 1, float secondsToSelfDestruct = 0);
         ~Sprite();
 
         /**

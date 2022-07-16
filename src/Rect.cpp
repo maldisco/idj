@@ -14,12 +14,8 @@ void Rect::Centered(Vec2 center){
     this->y = center.y - this->h/2;
 }
 
-Rect Rect::operator+(Vec2 v2){
-    return Rect(x + v2.x, y + v2.y, w, h);
-}
-
-Rect Rect::operator=(Rect rect){
-    return Rect(rect.x, rect.y, rect.w, rect.h);
+Rect Rect::operator+(const Vec2& rhs) const{
+    return Rect(x + rhs.x, y + rhs.y, w, h);
 }
 
 float Rect::Distance(Rect r1, Rect r2){

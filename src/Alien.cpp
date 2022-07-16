@@ -4,6 +4,7 @@
 #include "Collider.h"
 #include "InputManager.h"
 #include "Camera.h"
+#include "Sound.h"
 #include "Game.h"
 #include "Bullet.h"
 
@@ -65,22 +66,21 @@ void Alien::Update(float dt){
                 taskQueue.pop();
             } else {
                 // move in direction to the click
-                associated.box.x += newSpeed.x*dt;
-                associated.box.y += newSpeed.y*dt;
+                associated.box = associated.box + newSpeed*dt;
             }
         // if task is SHOOT
         } else {
             // search for minion closer to mouse click
             int closerDistance = INT_MAX;
             std::weak_ptr<GameObject> closerMinion;
-            for(auto shootingMinion : minionArray){
-                float distance = Vec2::Distance(shootingMinion.lock()->box.Center(), taskQueue.front().pos);
+            for(auto minion : minionArray){
+                float distance = Vec2::Distance(minion.lock()->box.Center(), taskQueue.front().pos);
                 if(distance < closerDistance){
                     closerDistance = distance;
-                    closerMinion = shootingMinion;
+                    closerMinion = minion;
                 }
             }
-            Minion* minion = static_cast<Minion*>(closerMinion.lock()->GetComponent("Minion"));
+            Minion* minion = (Minion*)(closerMinion.lock()->GetComponent("Minion"));
             minion->Shoot(taskQueue.front().pos);
             taskQueue.pop();
         }
@@ -97,6 +97,14 @@ void Alien::NotifyCollision(GameObject& other){
             this->hp -= 5;
             if(this->hp <= 0){
                 associated.RequestDelete();
+
+                GameObject* alienDeath = new GameObject();
+	            alienDeath->AddComponent(new Sprite("assets/img/aliendeath.png", *alienDeath, 4, 0.1f, 0.4f));
+                Sound* sound = new Sound("assets/audio/boom.wav", *alienDeath);
+                sound->Play();
+                alienDeath->AddComponent(sound);
+	            alienDeath->box.Centered(associated.box.Center());
+	            Game::GetInstance().GetState().AddObject(alienDeath);
             }
         }
     }

@@ -9,6 +9,13 @@
  */
 class TileMap : public Component{
     public:
+        /**
+         * @brief Construct a new Tile Map object
+         * 
+         * @param associated 
+         * @param file 
+         * @param tileSet 
+         */
         TileMap(GameObject& associated, std::string file, TileSet* tileSet);
 
         /**

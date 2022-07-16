@@ -11,6 +11,13 @@
  */
 class Minion : public Component {
     public:
+        /**
+         * @brief Construct a new Minion object
+         * 
+         * @param associated 
+         * @param alienCenter 
+         * @param arcOffsetDeg 
+         */
         Minion(GameObject& associated, std::weak_ptr<GameObject> alienCenter, float arcOffsetDeg = 0);
 
         void Update(float dt);

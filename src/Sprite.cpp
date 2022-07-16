@@ -5,11 +5,11 @@
 #define INCLUDE_SDL_IMAGE
 #include "SDL_include.h"
 
-Sprite::Sprite(GameObject& associated, int frameCount, float frameTime) : Component(associated), texture(nullptr), frameCount(frameCount),
- currentFrame(0), timeElapsed(0), frameTime(frameTime) {}
+Sprite::Sprite(GameObject& associated, int frameCount, float frameTime, float secondsToSelfDestruct) : Component(associated), selfDestructCount(), texture(nullptr),
+ frameCount(frameCount), currentFrame(0), timeElapsed(0), frameTime(frameTime), secondsToSelfDestruct(secondsToSelfDestruct) {}
 
-Sprite::Sprite(std::string file, GameObject& associated, int frameCount, float frameTime) : Component(associated), texture(nullptr), scale({1, 1}),
- frameCount(frameCount), currentFrame(0), timeElapsed(0), frameTime(frameTime) {
+Sprite::Sprite(std::string file, GameObject& associated, int frameCount, float frameTime, float secondsToSelfDestruct) : Component(associated), selfDestructCount(),
+ texture(nullptr), scale({1, 1}), frameCount(frameCount), currentFrame(0), timeElapsed(0), frameTime(frameTime), secondsToSelfDestruct(secondsToSelfDestruct) {
     Open(file);
 }
 
@@ -24,7 +24,7 @@ void Sprite::Open(std::string file){
     }
 
     SDL_QueryTexture(texture, nullptr, nullptr, &width, &height);
-    associated.box.w = width;
+    associated.box.w = width/frameCount;
     associated.box.h = height;
     SetClip(0, 0, GetWidth(), GetHeight());
 }
@@ -40,10 +40,18 @@ void Sprite::Update(float dt){
     timeElapsed += dt;
     if(timeElapsed > frameTime){
         currentFrame++;
+        timeElapsed = 0;
         if(currentFrame >= frameCount){
             currentFrame = 0;
         }
         SetClip((currentFrame)*GetWidth(), 0, GetWidth(), GetHeight());
+    }
+
+    if(secondsToSelfDestruct > 0){
+        selfDestructCount.Update(dt);
+        if(selfDestructCount.Get()>secondsToSelfDestruct){
+            associated.RequestDelete();
+        }
     }
 }
 

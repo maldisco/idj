@@ -5,6 +5,8 @@
 #include "Game.h"
 #include "Camera.h"
 #include "Bullet.h"
+#include "Timer.h"
+#include "Sound.h"
 #include "InputManager.h"
 
 PenguinBody* PenguinBody::player;
@@ -33,18 +35,13 @@ void PenguinBody::Update(float dt){
         linearSpeed = std::max(linearSpeed-5, float(0));
     }
     if (InputManager::GetInstance().IsKeyDown(A_KEY)){
-        Vec2 newSpeed = Vec2::Rotate(speed, -PI/64);
-        speed.x = newSpeed.x;
-        speed.y = newSpeed.y;  
+        speed = Vec2::Rotate(speed, -PI/64);
     } 
     if (InputManager::GetInstance().IsKeyDown(D_KEY)){
-        Vec2 newSpeed = Vec2::Rotate(speed, PI/64);
-        speed.x = newSpeed.x;
-        speed.y = newSpeed.y;  
+        speed = Vec2::Rotate(speed, PI/64);
     }   
 
-    associated.box.x += (speed*linearSpeed).x*dt;
-    associated.box.y += (speed*linearSpeed).y*dt;
+    associated.box = associated.box + (speed*(linearSpeed*dt));
     associated.angleDeg = speed.SlopeX()*180/PI;
 }
 
@@ -57,6 +54,14 @@ void PenguinBody::NotifyCollision(GameObject& other){
                 Camera::Unfollow();
                 associated.RequestDelete();
                 pcannon.lock()->RequestDelete();
+
+                GameObject* penguimDeath = new GameObject();
+	            penguimDeath->AddComponent(new Sprite("assets/img/penguindeath.png", *penguimDeath, 5, 0.1f, 0.5f));
+                Sound* sound = new Sound("assets/audio/boom.wav", *penguimDeath);
+                sound->Play();
+                penguimDeath->AddComponent(sound);
+	            penguimDeath->box.Centered(associated.box.Center());
+	            Game::GetInstance().GetState().AddObject(penguimDeath);
             }
         }
     }

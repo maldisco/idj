@@ -5,6 +5,11 @@
 
 class PenguinBody : public Component {
     public:
+        /**
+         * @brief Construct a new Penguin Body object
+         * 
+         * @param associated 
+         */
         PenguinBody(GameObject& associated);
         ~PenguinBody();
 
