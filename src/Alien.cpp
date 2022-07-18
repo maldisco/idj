@@ -23,20 +23,20 @@ Alien::~Alien(){
 
 void Alien::Start(){
     GameObject* minion = new GameObject();
-    minion->AddComponent(new Minion(*minion, Game::GetInstance().GetState().GetObjectPtr(&associated)));
-    minionArray.push_back(Game::GetInstance().GetState().AddObject(minion));
+    minion->AddComponent(new Minion(*minion, Game::GetInstance().GetCurrentState().GetObjectPtr(&associated)));
+    minionArray.push_back(Game::GetInstance().GetCurrentState().AddObject(minion));
 
     GameObject* minion2 = new GameObject();
-    minion2->AddComponent(new Minion(*minion2, Game::GetInstance().GetState().GetObjectPtr(&associated), PI/2));
-    minionArray.push_back(Game::GetInstance().GetState().AddObject(minion2));
+    minion2->AddComponent(new Minion(*minion2, Game::GetInstance().GetCurrentState().GetObjectPtr(&associated), PI/2));
+    minionArray.push_back(Game::GetInstance().GetCurrentState().AddObject(minion2));
 
     GameObject* minion3 = new GameObject();
-    minion3->AddComponent(new Minion(*minion3, Game::GetInstance().GetState().GetObjectPtr(&associated), PI));
-    minionArray.push_back(Game::GetInstance().GetState().AddObject(minion3));
+    minion3->AddComponent(new Minion(*minion3, Game::GetInstance().GetCurrentState().GetObjectPtr(&associated), PI));
+    minionArray.push_back(Game::GetInstance().GetCurrentState().AddObject(minion3));
 
     GameObject* minion4 = new GameObject();
-    minion4->AddComponent(new Minion(*minion4, Game::GetInstance().GetState().GetObjectPtr(&associated), 3*PI/2));
-    minionArray.push_back(Game::GetInstance().GetState().AddObject(minion4));      
+    minion4->AddComponent(new Minion(*minion4, Game::GetInstance().GetCurrentState().GetObjectPtr(&associated), 3*PI/2));
+    minionArray.push_back(Game::GetInstance().GetCurrentState().AddObject(minion4));      
 }
 
 void Alien::Update(float dt){
@@ -91,7 +91,7 @@ void Alien::NotifyCollision(GameObject& other){
                 sound->Play();
                 alienDeath->AddComponent(sound);
 	            alienDeath->box.Centered(associated.box.Center());
-	            Game::GetInstance().GetState().AddObject(alienDeath);
+	            Game::GetInstance().GetCurrentState().AddObject(alienDeath);
             }
         }
     }

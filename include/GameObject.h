@@ -1,11 +1,9 @@
 #ifndef GAMEOBJECT_H
 #define GAMEOBJECT_H
 
-#include "string"
-#include "vector"
-#include "memory"
-
 #include "Rect.h"
+#include <vector>
+#include <memory>
 
 // forward declaration to dodge circular dependency
 class Component;

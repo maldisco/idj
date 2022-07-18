@@ -1,6 +1,7 @@
 #include "Game.h"
 #include "Resources.h"
 #include "Camera.h"
+#include "Sprite.h"
 
 #define INCLUDE_SDL_IMAGE
 #include "SDL_include.h"

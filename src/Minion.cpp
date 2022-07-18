@@ -39,7 +39,7 @@ void Minion::Shoot(Vec2 target){
     bulletObject->box.x = associated.box.x;
     bulletObject->box.y = associated.box.y;
     bulletObject->angleDeg = angle*180/PI;
-    Game::GetInstance().GetState().AddObject(bulletObject);
+    Game::GetInstance().GetCurrentState().AddObject(bulletObject);
 }
 
 void Minion::Render(){}

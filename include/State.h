@@ -1,83 +1,46 @@
 #ifndef STATE_H
 #define STATE_H
 
-#include "Music.h"
-#include "Sprite.h"
-#include "memory"
+#include <vector>
+#include <string>
+#include <memory>
+#include "GameObject.h"
 
-/**
- * @brief Class responsible for controlling the screen and specific internal logics.
- */
-class State{
-    private:
-        /**
-         * @brief Soundtrack 
-         */
-        Music music;
-        /**
-         * @brief Control signal for exiting the game 
-         */
-        bool quitRequested;
-        /**
-         * @brief GameObject array
-         * 
-         */
-        std::vector<std::shared_ptr<GameObject>> objectArray;
-
-        bool started;
-
-        /**
-         * @brief Take care of user inputs (temp)
-         * 
-         */
-        void Input();
-
+class State {
     public:
-        /**
-         * @brief Construct a new State object, instantiating background and music
-         */
         State();
+        virtual ~State();
 
-        /**
-         * @brief Clear object array
-         * 
-         */
-        ~State();
+        virtual void LoadAssets() = 0;
+        virtual void Update(float dt) = 0;
+        virtual void Render() = 0;
 
-        /**
-         * @brief Tell if game was closed
-         * 
-         * @return true 
-         * @return false 
-         */
-        bool QuitRequested();
+        virtual void Start() = 0;
+        virtual void Pause() = 0;
+        virtual void Resume() = 0;
 
-        /**
-         * @brief Update game objects
-         * 
-         * @param dt 
-         */
-        void Update(float dt);
-
-        /**
-         * @brief Render game objects
-         */
-        void Render();
-
-        void LoadAssets();
-
-        void Start();
-
-        std::weak_ptr< GameObject > AddObject(GameObject* go);
-
-        std::weak_ptr< GameObject > GetObjectPtr(GameObject* go);
-
+        virtual std::weak_ptr<GameObject> AddObject(GameObject* object);
+        virtual std::weak_ptr<GameObject> GetObjectPtr(GameObject* object);
         /**
          * @brief return a vector of gameobjects that contain some component
          * 
          * @param component 
          * @return std::vector<std::weak_ptr<GameObject>> 
          */
-        std::vector<std::weak_ptr<GameObject>> QueryObjectsBy(std::string component);
+        virtual std::vector<std::weak_ptr<GameObject>> QueryObjectsBy(std::string component);
+
+        bool PopRequested();
+        bool QuitRequested();
+    
+    protected:
+        void StartArray();
+        virtual void UpdateArray(float dt);
+        virtual void RenderArray();
+
+        bool popRequested;
+        bool quitRequested;
+        bool started;
+
+        std::vector<std::shared_ptr<GameObject>> objectArray;
 };
 #endif

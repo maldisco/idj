@@ -46,7 +46,7 @@ void PenguinCannon::Shoot(){
     bulletObject->box.x = start.x - bulletObject->box.w/2;
     bulletObject->box.y = start.y;
     bulletObject->angleDeg = associated.angleDeg;
-    Game::GetInstance().GetState().AddObject(bulletObject);
+    Game::GetInstance().GetCurrentState().AddObject(bulletObject);
 }
 
 void PenguinCannon::Render(){}

@@ -6,6 +6,8 @@
 
 #include "State.h"
 
+#include <stack>
+
 /**
  * @brief Class responsible for running main game loop
  */
@@ -29,14 +31,17 @@ class Game {
          * @brief Game window 
          */
         SDL_Window* window;
+
         /**
          * @brief Responsible for filling the window 
          */
         SDL_Renderer* renderer;
+
         /**
          * @brief Object that controls the state of the game 
          */
-        State* state;
+        State* storedState;
+        static std::stack<std::unique_ptr<State>> stateStack;
 
         /**
          * @brief time when frame started
@@ -73,7 +78,14 @@ class Game {
          * 
          * @return State& 
          */
-        State& GetState();
+        State& GetCurrentState();
+
+        /**
+         * @brief Push a state to the stack
+         * 
+         * @param state 
+         */
+        void Push(State* state);
 
         /**
          * @brief Get the only instance of Game class
