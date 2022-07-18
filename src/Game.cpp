@@ -5,9 +5,11 @@
 #include "InputManager.h"
 #include "Resources.h"
 #include <ctime>
+#include <iostream>
 
 Game* Game::instance;
 std::stack<std::unique_ptr<State>> Game::stateStack;
+State* Game::storedState;
 Game& Game::GetInstance(){
     if (instance == nullptr)
     {
@@ -90,7 +92,7 @@ SDL_Renderer* Game::GetRenderer(){
 }
 
 void Game::Run(){
-    stateStack.emplace(std::unique_ptr<State>(storedState));
+    stateStack.emplace(storedState);
     stateStack.top()->Start();
     storedState = nullptr;
 
@@ -105,7 +107,7 @@ void Game::Run(){
 
         if(storedState != nullptr){
             stateStack.top()->Pause();
-            stateStack.push(std::unique_ptr<State>(storedState));
+            stateStack.emplace(storedState);
             stateStack.top()->Start();
             storedState = nullptr;
         }

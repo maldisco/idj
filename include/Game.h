@@ -40,7 +40,7 @@ class Game {
         /**
          * @brief Object that controls the state of the game 
          */
-        State* storedState;
+        static State* storedState;
         static std::stack<std::unique_ptr<State>> stateStack;
 
         /**

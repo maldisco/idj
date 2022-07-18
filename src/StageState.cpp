@@ -8,6 +8,7 @@
 #include "Alien.h"
 #include "PenguinBody.h"
 #include "Collision.cpp"
+#include "TitleState.h"
 
 StageState::StageState() : State(), backgroundMusic("assets/audio/stageState.ogg"){    
 	// background
@@ -61,14 +62,18 @@ void StageState::Pause(){}
 void StageState::Resume(){}
 
 void StageState::Update(float dt){
-
 	// update camera
 	Camera::Update(dt);
 
 	// check if quit was requested
-	if(InputManager::GetInstance().KeyPress(ESCAPE_KEY) || InputManager::GetInstance().QuitRequested()){
+	if(InputManager::GetInstance().QuitRequested()){
 		quitRequested = true;
 	}
+
+	if(InputManager::GetInstance().KeyPress(ESCAPE_KEY)){
+        State* title = new TitleState();
+        Game::GetInstance().Push(title);
+    }
 
 	// Update every object
     UpdateArray(dt);
