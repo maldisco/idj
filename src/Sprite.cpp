@@ -24,7 +24,7 @@ void Sprite::Open(std::string file){
         exit(EXIT_FAILURE);
     }
 
-    SDL_QueryTexture(texture, nullptr, nullptr, &width, &height);
+    SDL_QueryTexture(texture.get(), nullptr, nullptr, &width, &height);
     associated.box.w = width/frameCount;
     associated.box.h = height;
     SetClip(0, 0, GetWidth(), GetHeight());
@@ -71,7 +71,7 @@ void Sprite::Render(int x, int y){
     dstrect.w = clipRect.w*scale.x;
     dstrect.h = clipRect.h*scale.y;
 
-    SDL_RenderCopyEx(Game::GetInstance().GetRenderer(), texture, &clipRect, &dstrect, associated.angleDeg, nullptr, SDL_FLIP_NONE);
+    SDL_RenderCopyEx(Game::GetInstance().GetRenderer(), texture.get(), &clipRect, &dstrect, associated.angleDeg, nullptr, SDL_FLIP_NONE);
 }
 
 void Sprite::Render(){

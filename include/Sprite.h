@@ -18,7 +18,7 @@ class Sprite : public Component{
         /**
          * @brief Object that holds a texture 
          */
-        SDL_Texture* texture;
+        std::shared_ptr<SDL_Texture> texture;
         /**
          * @brief Rectangle specifying dimensions of the texture 
          */

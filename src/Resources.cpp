@@ -1,26 +1,26 @@
 #include "Resources.h"
 #include "Game.h"
 
-
-std::unordered_map<std::string, SDL_Texture*> Resources::imageTable;
+std::unordered_map<std::string, std::shared_ptr<SDL_Texture>> Resources::imageTable;
 std::unordered_map<std::string, Mix_Music*> Resources::musicTable;
 std::unordered_map<std::string, Mix_Chunk*> Resources::soundTable;
 
-SDL_Texture* Resources::GetImage(std::string file){
+std::shared_ptr<SDL_Texture> Resources::GetImage(std::string file){
     if(imageTable.find(file) != imageTable.end()){
         return imageTable[file];
     }
 
-    imageTable[file] = IMG_LoadTexture(Game::GetInstance().GetRenderer(), file.c_str());
+    SDL_Texture* texture = IMG_LoadTexture(Game::GetInstance().GetRenderer(), file.c_str());
+    imageTable[file] = std::shared_ptr<SDL_Texture>(texture, [](SDL_Texture* ptr) {SDL_DestroyTexture(ptr);});
     return imageTable[file];
 }
 
 void Resources::ClearImages(){
     for(auto& image : imageTable){
-        SDL_DestroyTexture(image.second);
+        if(image.second.unique()){
+            imageTable.erase(image.first);
+        }
     }
-
-    imageTable.clear();
 }
 
 Mix_Music* Resources::GetMusic(std::string file){

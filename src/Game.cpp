@@ -1,5 +1,6 @@
 #define INCLUDE_SDL_IMAGE
 #define INCLUDE_SDL_MIXER
+#define INCLUDE_SDL_TTF
 #include "SDL_include.h"
 #include "Game.h"
 #include "InputManager.h"
@@ -40,6 +41,11 @@ Game::Game(std::string title, int width, int height) : frameStart(0), dt(0){
         SDL_Log("Cant initialize MIX: %s", SDL_GetError());
     }
 
+    if (TTF_Init() == 0)
+    {
+        SDL_Log("Cant initialize TTF: %s", SDL_GetError());
+    }
+
     if (Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 1024) != 0)
     {
         SDL_Log("Cant initialize OpenAudio: %s", SDL_GetError());
@@ -72,6 +78,7 @@ Game::~Game(){
     }
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
+    TTF_Quit();
     Mix_CloseAudio();
     Mix_Quit();
     IMG_Quit();
@@ -99,6 +106,7 @@ void Game::Run(){
     while (!(stateStack.empty()) and !(stateStack.top()->QuitRequested())){
         if(stateStack.top()->PopRequested()){
             stateStack.pop();
+            Resources::ClearImages();
 
             if(!stateStack.empty()){
                 stateStack.top()->Resume();
@@ -119,6 +127,8 @@ void Game::Run(){
         SDL_RenderPresent(renderer);
         SDL_Delay(33);
     }
+    
+    while(!stateStack.empty()) {stateStack.pop();}
     Resources::ClearImages();
     Resources::ClearMusics();
     Resources::ClearSounds();

@@ -1,8 +1,9 @@
 #ifndef RESOURCES_H
 #define RESOURCES_h
 
-#include "unordered_map"
+#include <unordered_map>
 #include <string>
+#include <memory>
 #define INCLUDE_SDL_MIXER
 #define INCLUDE_SDL_IMAGE
 #include "SDL_include.h"
@@ -18,9 +19,9 @@ class Resources{
          * @brief Load an image
          * 
          * @param file 
-         * @return SDL_Texture* 
+         * @return std::shared_ptr<SDL_Texture*> 
          */
-        static SDL_Texture* GetImage(std::string file);
+        static std::shared_ptr<SDL_Texture> GetImage(std::string file);
         /**
          * @brief Clear images map
          * 
@@ -58,7 +59,7 @@ class Resources{
          * @brief Maps will be used for memory usage improvement
          * 
          */
-        static std::unordered_map<std::string, SDL_Texture*> imageTable;
+        static std::unordered_map<std::string, std::shared_ptr<SDL_Texture>> imageTable;
         static std::unordered_map<std::string, Mix_Music*> musicTable;
         static std::unordered_map<std::string, Mix_Chunk*> soundTable;
 };
