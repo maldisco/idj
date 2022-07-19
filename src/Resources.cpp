@@ -1,10 +1,11 @@
 #include "Resources.h"
 #include "Game.h"
+#include <string>
 
 std::unordered_map<std::string, std::shared_ptr<SDL_Texture>> Resources::imageTable;
 std::unordered_map<std::string, Mix_Music*> Resources::musicTable;
 std::unordered_map<std::string, Mix_Chunk*> Resources::soundTable;
-
+std::unordered_map<std::string, TTF_Font*> Resources::fontTable;
 std::shared_ptr<SDL_Texture> Resources::GetImage(std::string file){
     if(imageTable.find(file) != imageTable.end()){
         return imageTable[file];
@@ -55,4 +56,22 @@ void Resources::ClearSounds(){
     }
 
     soundTable.clear();
+}
+
+TTF_Font* Resources::GetFont(std::string file, int size){
+    std::string key = file + std::to_string(size);
+    if(fontTable.find(key) != fontTable.end()){
+        return fontTable[key];
+    }
+
+    fontTable[key] = TTF_OpenFont(file.c_str(), size);
+    return fontTable[key];
+}
+
+void Resources::ClearFonts(){
+    for(auto& font : fontTable){
+        TTF_CloseFont(font.second);
+    }
+
+    fontTable.clear();
 }

@@ -41,7 +41,7 @@ Game::Game(std::string title, int width, int height) : frameStart(0), dt(0){
         SDL_Log("Cant initialize MIX: %s", SDL_GetError());
     }
 
-    if (TTF_Init() == 0)
+    if (TTF_Init() != 0)
     {
         SDL_Log("Cant initialize TTF: %s", SDL_GetError());
     }
@@ -132,6 +132,7 @@ void Game::Run(){
     Resources::ClearImages();
     Resources::ClearMusics();
     Resources::ClearSounds();
+    Resources::ClearFonts();
 }
 
 void Game::CalculateDeltaTime(){

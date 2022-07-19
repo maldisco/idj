@@ -1,16 +1,23 @@
 #include "TitleState.h"
 #include "Sprite.h"
+#include "Text.h"
 #include "InputManager.h"
 #include "StageState.h"
 #include "Camera.h"
 #include "Game.h"
 
 TitleState::TitleState() : State(){
-    GameObject* title = new GameObject();
-    title->AddComponent(new Sprite("assets/img/title.jpg", *title, 1 , 1.0f));
-    title->box.x = Camera::pos.x;
-    title->box.y = Camera::pos.y;
-    AddObject(title);
+    GameObject* bg = new GameObject();
+    bg->AddComponent(new Sprite("assets/img/title.jpg", *bg, 1 , 1.0f));
+    bg->box.x = Camera::pos.x;
+    bg->box.y = Camera::pos.y;
+    AddObject(bg);
+
+    GameObject* text = new GameObject();
+    text->box.x = Camera::pos.x + CAMERA_WIDTH/2;
+    text->box.y = Camera::pos.y + 500;
+    text->AddComponent(new Text(*text, "assets/font/callMeMaybe.ttf", 50, Text::BLENDED, "Press space to play", {255, 0, 0, SDL_ALPHA_OPAQUE}));
+    AddObject(text);
 }
 
 TitleState::~TitleState(){
