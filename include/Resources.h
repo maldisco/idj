@@ -33,9 +33,9 @@ class Resources{
          * @brief Load a music
          * 
          * @param file 
-         * @return Mix_Music* 
+         * @return std::shared_ptr<Mix_Music>
          */
-        static Mix_Music* GetMusic(std::string file);
+        static std::shared_ptr<Mix_Music> GetMusic(std::string file);
         /**
          * @brief Clear musics map
          * 
@@ -46,9 +46,9 @@ class Resources{
          * @brief Load a sound
          * 
          * @param file 
-         * @return Mix_Chunk* 
+         * @return std::shared_ptr<Mix_Chunk> 
          */
-        static Mix_Chunk* GetSound(std::string file);
+        static std::shared_ptr<Mix_Chunk> GetSound(std::string file);
         /**
          * @brief Clear sounds map
          * 
@@ -60,9 +60,9 @@ class Resources{
          * 
          * @param file 
          * @param size
-         * @return TTF_Font* 
+         * @return std::shared_ptr<TTF_Font> 
          */
-        static TTF_Font* GetFont(std::string file, int size);
+        static std::shared_ptr<TTF_Font> GetFont(std::string file, int size);
         /**
          * @brief Clear fonts map
          * 
@@ -75,8 +75,8 @@ class Resources{
          * 
          */
         static std::unordered_map<std::string, std::shared_ptr<SDL_Texture>> imageTable;
-        static std::unordered_map<std::string, Mix_Music*> musicTable;
-        static std::unordered_map<std::string, Mix_Chunk*> soundTable;
-        static std::unordered_map<std::string, TTF_Font*> fontTable;
+        static std::unordered_map<std::string, std::shared_ptr<Mix_Music>> musicTable;
+        static std::unordered_map<std::string, std::shared_ptr<Mix_Chunk>> soundTable;
+        static std::unordered_map<std::string, std::shared_ptr<TTF_Font>> fontTable;
 };
 #endif

@@ -74,7 +74,11 @@ void StageState::Start(){
 }
 
 void StageState::LoadAssets(){}
-void StageState::Pause(){}
+
+void StageState::Pause(){
+	backgroundMusic.Stop();
+}
+
 void StageState::Resume(){}
 
 void StageState::Update(float dt){

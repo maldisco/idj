@@ -11,7 +11,7 @@ Music::Music(std::string file) : Music(){
 }
 
 void Music::Play(int times){
-    if (Mix_PlayMusic(music, times) == -1){
+    if (Mix_PlayMusic(music.get(), times) == -1){
         SDL_Log("Cant play music: %s", SDL_GetError());
         
     }
@@ -35,5 +35,4 @@ bool Music::IsOpen(){
 }
 
 Music::~Music(){
-    Stop();
 }

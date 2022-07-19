@@ -16,7 +16,7 @@
 class Sprite : public Component{
     private:
         /**
-         * @brief Object that holds a texture 
+         * @brief Object that points to a texture 
          */
         std::shared_ptr<SDL_Texture> texture;
         /**

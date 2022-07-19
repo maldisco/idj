@@ -3,6 +3,8 @@
 #include "Component.h"
 #include "Timer.h"
 
+#include <memory>
+
 #define INCLUDE_SDL_TTF
 #define INCLUDE_SDL_IMAGE
 #include "SDL_include.h"
@@ -25,7 +27,7 @@ class Text : public Component {
         void SetFontSize(int fontSize);
     
     private:
-        TTF_Font* font;
+        std::shared_ptr<TTF_Font> font;
         SDL_Texture* texture;
         std::string text;
         TextStyle style;

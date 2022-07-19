@@ -2,6 +2,7 @@
 #define MUSIC_H
 
 #include <string>
+#include <memory>
 
 #define INCLUDE_SDL_MIXER
 #include "SDL_include.h"
@@ -12,9 +13,9 @@
 class Music{
     private:
         /**
-         * @brief Object that holds a music file 
+         * @brief Object that points to a music file 
          */
-        Mix_Music* music;
+        std::shared_ptr<Mix_Music> music;
     
     public:
         /**
