@@ -4,7 +4,7 @@
 #include "Resources.h"
 
 Text::Text(GameObject& associated, std::string fontFile, int fontSize, TextStyle style, std::string text, SDL_Color color) : 
-    Component(associated), fontFile(fontFile), fontSize(fontSize), style(style), text(text), color(color), texture(nullptr){
+    Component(associated), fontFile(fontFile), fontSize(fontSize), style(style), text(text), color(color), texture(nullptr), cooldown(), showText(true){
         RemakeTexture();
     }
 
@@ -14,10 +14,16 @@ Text::~Text(){
     }
 }
 
-void Text::Update(float dt){}
+void Text::Update(float dt){
+    cooldown.Update(dt);
+    if(cooldown.Get() > 0.5f){
+        showText = !showText;
+        cooldown.Restart();
+    }
+}
 
 void Text::Render(){
-    if(texture != nullptr){
+    if(texture != nullptr and showText){
         SDL_Rect src;
         SDL_Rect dst;
 

@@ -17,7 +17,7 @@ class Alien : public Component{
          * 
          * @param associated 
          */
-        Alien(GameObject& associated);
+        Alien(GameObject& associated, float timeOffset = 0);
         ~Alien();
 
         void Start();
@@ -31,6 +31,7 @@ class Alien : public Component{
         enum AlienState{ MOVING, RESTING };
         AlienState state;
         Timer restTimer;
+        float timeOffset;
         Vec2 destination;
         Vec2 speed;
         int hp;

@@ -35,6 +35,7 @@ void TitleState::Start(){
 }
 
 void TitleState::Update(float dt){
+    UpdateArray(dt);
     // check if quit was requested
 	if(InputManager::GetInstance().KeyPress(ESCAPE_KEY) || InputManager::GetInstance().QuitRequested()){
 		quitRequested = true;

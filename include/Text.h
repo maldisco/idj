@@ -1,6 +1,7 @@
 #ifndef TEXT_H
 #define TEXT_H
 #include "Component.h"
+#include "Timer.h"
 
 #define INCLUDE_SDL_TTF
 #define INCLUDE_SDL_IMAGE
@@ -31,6 +32,8 @@ class Text : public Component {
         std::string fontFile;
         int fontSize;
         SDL_Color color;
+        Timer cooldown;
+        bool showText;
 
         void RemakeTexture();
 };

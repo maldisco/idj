@@ -9,6 +9,8 @@
 #include "PenguinBody.h"
 #include "Collision.cpp"
 #include "TitleState.h"
+#include "EndState.h"
+#include "GameData.h"
 
 StageState::StageState() : State(), backgroundMusic("assets/audio/stageState.ogg"){    
 	// background
@@ -42,6 +44,20 @@ StageState::StageState() : State(), backgroundMusic("assets/audio/stageState.ogg
 	alien->AddComponent(new Alien(*alien));
 	alien->box.x = 512 - alien->box.w/2;
 	alien->box.y = 300 - alien->box.h/2;
+	AddObject(alien);
+
+	// enemy
+	alien = new GameObject();
+	alien->AddComponent(new Alien(*alien, 0.03f));
+	alien->box.x = 1012 - alien->box.w/2;
+	alien->box.y = 100 - alien->box.h/2;
+	AddObject(alien);
+
+	// enemy
+	alien = new GameObject();
+	alien->AddComponent(new Alien(*alien, 0.046f));
+	alien->box.x = 166 - alien->box.w/2;
+	alien->box.y = 500 - alien->box.h/2;
 	AddObject(alien);
 
     backgroundMusic.Play();
@@ -97,6 +113,18 @@ void StageState::Update(float dt){
             objectArray.erase(objectArray.begin()+i);
         }
     }
+
+	if(Alien::alienCount <= 0){
+		GameData::playerVictory = true;
+		popRequested = true;
+		Game::GetInstance().Push(new EndState());
+	}
+
+	if(PenguinBody::player == nullptr){
+		GameData::playerVictory = false;
+		popRequested = true;
+		Game::GetInstance().Push(new EndState());
+	}
 }
 
 void StageState::Render(){

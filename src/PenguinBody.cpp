@@ -41,7 +41,10 @@ void PenguinBody::Update(float dt){
         speed = Vec2::Rotate(speed, PI/64);
     }   
 
-    associated.box = associated.box + (speed*(linearSpeed*dt));
+    Rect newPos = associated.box + (speed*(linearSpeed*dt));
+    if(newPos.x > 0 and newPos.x < 1408 and newPos.y > 0 and newPos.y < 1280){
+        associated.box = newPos;
+    }
     associated.angleDeg = speed.SlopeX()*180/PI;
 }
 

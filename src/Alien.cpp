@@ -10,7 +10,7 @@
 
 
 int Alien::alienCount = 0;
-Alien::Alien(GameObject& associated) : Component(associated), speed({100, 100}), hp(100), state(RESTING), restTimer(){
+Alien::Alien(GameObject& associated, float timeOffset) : Component(associated), speed({100, 100}), hp(100), state(RESTING), restTimer(), timeOffset(timeOffset){
     associated.AddComponent(new Sprite("assets/img/alien.png", associated, 1, 1.0));
     associated.AddComponent(new Collider(associated));
     Alien::alienCount++;
@@ -50,7 +50,7 @@ void Alien::Update(float dt){
             speed = Vec2::Rotate(speed, Vec2::Slope(direction, speed));
             state = MOVING;
         } else {
-            restTimer.Update(dt);
+            restTimer.Update(dt + timeOffset);
         }
     } else {
         if(Vec2::Distance(associated.box.Center(), destination) < 5.0f){
@@ -81,7 +81,7 @@ void Alien::NotifyCollision(GameObject& other){
     if(other.GetComponent("Bullet") != nullptr){
         Bullet* bullet = (Bullet*)other.GetComponent("Bullet");
         if(not bullet->targetsPlayer){
-            this->hp -= 5;
+            this->hp -= bullet->GetDamage();
             if(this->hp <= 0){
                 associated.RequestDelete();
 
