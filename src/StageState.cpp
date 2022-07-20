@@ -22,12 +22,12 @@ StageState::StageState() : State(), backgroundMusic("assets/audio/stageState.ogg
 	AddObject(bg);
 
 	// tileset
-    GameObject* go = new GameObject();
-	TileSet* tileSet = new TileSet(*go, 64, 64, "assets/img/tileset.png");
-	go->AddComponent(new TileMap(*go, "assets/map/tileMap.txt", tileSet));
-	go->box.x = 0;
-	go->box.y = 0;
-	AddObject(go);
+    GameObject* tileMap = new GameObject();
+	TileSet* tileSet = new TileSet(*tileMap, 64, 64, "assets/img/tileset.png");
+	tileMap->AddComponent(new TileMap(*tileMap, "assets/map/tileMap.txt", tileSet));
+	tileMap->box.x = 0;
+	tileMap->box.y = 0;
+	AddObject(tileMap);
 
 	// main char
 	GameObject* penguin = new GameObject();
@@ -48,19 +48,24 @@ StageState::StageState() : State(), backgroundMusic("assets/audio/stageState.ogg
 
 	// enemy
 	alien = new GameObject();
-	alien->AddComponent(new Alien(*alien, 0.03f));
+	alien->AddComponent(new Alien(*alien, 0.035f));
 	alien->box.x = 1012 - alien->box.w/2;
 	alien->box.y = 100 - alien->box.h/2;
 	AddObject(alien);
 
 	// enemy
 	alien = new GameObject();
-	alien->AddComponent(new Alien(*alien, 0.046f));
+	alien->AddComponent(new Alien(*alien, 0.07f));
 	alien->box.x = 166 - alien->box.w/2;
 	alien->box.y = 500 - alien->box.h/2;
 	AddObject(alien);
 
-    backgroundMusic.Play();
+	// enemy
+	alien = new GameObject();
+	alien->AddComponent(new Alien(*alien, 0.1f));
+	alien->box.x = 20 - alien->box.w/2;
+	alien->box.y = 20 - alien->box.h/2;
+	AddObject(alien);
 }
 
 StageState::~StageState(){
@@ -70,6 +75,7 @@ StageState::~StageState(){
 void StageState::Start(){
 	LoadAssets();
 	StartArray();
+	backgroundMusic.Play();
 	started = true;
 }
 
@@ -79,7 +85,9 @@ void StageState::Pause(){
 	backgroundMusic.Stop();
 }
 
-void StageState::Resume(){}
+void StageState::Resume(){
+	backgroundMusic.Play();
+}
 
 void StageState::Update(float dt){
 	// update camera
@@ -91,8 +99,7 @@ void StageState::Update(float dt){
 	}
 
 	if(InputManager::GetInstance().KeyPress(ESCAPE_KEY)){
-        State* title = new TitleState();
-        Game::GetInstance().Push(title);
+        popRequested = true;
     }
 
 	// Update every object

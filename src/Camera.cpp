@@ -12,6 +12,11 @@ void Camera::Unfollow(){
     focus = nullptr;
 }
 
+void Camera::Reset(){
+    Camera::pos.x = 0;
+    Camera::pos.y = 0;
+}
+
 void Camera::Update(float dt){
     if(focus == nullptr){
         if(InputManager::GetInstance().IsKeyDown(LEFT_ARROW_KEY)){

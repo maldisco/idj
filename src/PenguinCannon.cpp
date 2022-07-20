@@ -37,7 +37,7 @@ void PenguinCannon::Update(float dt){
 void PenguinCannon::Shoot(){
     GameObject* bulletObject = new GameObject();
     // Bullet(associated, angle, speed, damage, maxDistance, sprite, frameTime, frameCount)
-    bulletObject->AddComponent(new Bullet(*bulletObject, associated.angleDeg*PI/180, 500, 20, 500, "assets/img/minionbullet2.png", 0.05, 3, false));
+    bulletObject->AddComponent(new Bullet(*bulletObject, associated.angleDeg*PI/180, 500, 20, 500, "assets/img/penguinbullet.png", 0.05, 4, false));
 
     // calculating bullet starting point
     Vec2 offset = Vec2::Rotate(Vec2(associated.box.x+associated.box.w, associated.box.y+associated.box.h/2) - associated.box.Center(), associated.angleDeg*PI/180);

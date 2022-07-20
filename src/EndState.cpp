@@ -18,17 +18,15 @@ EndState::EndState(){
         backgroundMusic = Music("assets/audio/endStateLose.ogg");
     }
     bg->AddComponent(result);
-    bg->box.x = Camera::pos.x;
-    bg->box.y = Camera::pos.y;
+    bg->box.x = 0;
+    bg->box.y = 0;
     AddObject(bg);
 
     GameObject* text = new GameObject();
-    text->box.x = Camera::pos.x + CAMERA_WIDTH/2;
-    text->box.y = Camera::pos.y + 500;
+    text->box.x = CAMERA_WIDTH/2;
+    text->box.y = 500;
     text->AddComponent(new Text(*text, "assets/font/callMeMaybe.ttf", 50, Text::BLENDED, "ESC to quit  SPACE to play again", {255, 0, 0, SDL_ALPHA_OPAQUE}));
     AddObject(text);
-
-    backgroundMusic.Play();
 }
 
 void EndState::Update(float dt){
@@ -40,8 +38,6 @@ void EndState::Update(float dt){
 
     if(InputManager::GetInstance().KeyPress(SPACE_KEY)){
         popRequested = true;
-        State* stage = new TitleState();
-        Game::GetInstance().Push(stage);
     }
 }
 
@@ -50,13 +46,22 @@ EndState::~EndState(){
 }
 
 void EndState::LoadAssets(){}
-void EndState::Pause(){}
-void EndState::Resume(){}
+
+void EndState::Pause(){
+    backgroundMusic.Stop();
+}
+
+void EndState::Resume(){
+    backgroundMusic.Play();
+    Camera::Reset();
+}
 
 void EndState::Start(){
+    Camera::Reset();
 	LoadAssets();
 	StartArray();
 	started = true;
+    backgroundMusic.Play();
 }
 
 void EndState::Render(){

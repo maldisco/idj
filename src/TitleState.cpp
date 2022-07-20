@@ -9,13 +9,13 @@
 TitleState::TitleState() : State(){
     GameObject* bg = new GameObject();
     bg->AddComponent(new Sprite("assets/img/title.jpg", *bg, 1 , 1.0f));
-    bg->box.x = Camera::pos.x;
-    bg->box.y = Camera::pos.y;
+    bg->box.x = 0;
+    bg->box.y = 0;
     AddObject(bg);
 
     GameObject* text = new GameObject();
-    text->box.x = Camera::pos.x + CAMERA_WIDTH/2;
-    text->box.y = Camera::pos.y + 500;
+    text->box.x = CAMERA_WIDTH/2;
+    text->box.y = 500;
     text->AddComponent(new Text(*text, "assets/font/callMeMaybe.ttf", 50, Text::BLENDED, "Press space to play", {255, 0, 0, SDL_ALPHA_OPAQUE}));
     AddObject(text);
 }
@@ -25,10 +25,15 @@ TitleState::~TitleState(){
 }
 
 void TitleState::LoadAssets(){}
+
 void TitleState::Pause(){}
-void TitleState::Resume(){}
+
+void TitleState::Resume(){
+    Camera::Reset();
+}
 
 void TitleState::Start(){
+    Camera::Reset();
 	LoadAssets();
 	StartArray();
 	started = true;
